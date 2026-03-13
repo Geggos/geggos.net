@@ -1,0 +1,28 @@
+---
+import Main from "../layouts/Main.astro";
+import { Image } from "astro:assets";
+import geggobanner from "../assets/geggobanner.png";
+import buh from "../assets/ezgif.com-optiwebp.webp";
+---
+
+<Main>
+    <div class="my-16 text-center flex flex-col">
+        <h1>Welcome to Geggos.net!</h1>
+        <hr />
+        the buh is still working on this.
+        <Image
+            src={buh}
+            alt="the buh is working very hard."
+            class="self-center"
+        />
+    </div>
+</Main>
+
+<style>
+    .index-banner {
+        width: 100%;
+        max-height: 600px;
+        object-fit: cover;
+        object-position: center -32px;
+    }
+</style>
