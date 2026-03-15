@@ -3,25 +3,24 @@ import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
 import geggobanner from "../assets/geggobanner.png";
 import buh from "../assets/ezgif.com-optiwebp.webp";
----
 
+---
 <Main>
     <div class="w-screen relative left-1/2 -translate-x-1/2">
         <Image
             src={geggobanner}
             alt="a banner of Geggos and his friends"
-            class="index-banner"
+            class="index-banner shadow-md"
         />
     </div>
     <div class="my-16 text-center flex flex-col">
         <h1>Welcome to Geggos.net!</h1>
         <hr />
-        the buh is still working on this.
-        <Image
-            src={buh}
-            alt="the buh is working very hard."
-            class="self-center"
-        />
+        <div class="flex flex-col">
+            <span>placeholder placeholder buh buh buh lorem ipsum lorem ipsum buh i really like burgers placeholder placeholder buh buh buh lorem ipsum lorem ipsum buh i really like burgers</span>
+            <span>placeholder placeholder buh buh buh lorem ipsum lorem ipsum buh i really like burgers</span>
+            <span>ideally socials etc would go here</span>
+        </div>
     </div>
 </Main>
 
@@ -31,5 +30,12 @@ import buh from "../assets/ezgif.com-optiwebp.webp";
         max-height: 600px;
         object-fit: cover;
         object-position: center -32px;
+    }
+    
+    h1:hover {
+        transform: rotate(-0.5deg) !important;
+    }
+    h1:active {
+        transform: scale(0.95) !important;
     }
 </style>

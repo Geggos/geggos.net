@@ -20,3 +20,13 @@ import { ClientRouter } from "astro:transitions";
         <Footer />
     </body>
 </html>
+
+<script>
+	import twemoji from 'twemoji';
+	document.addEventListener('DOMContentLoaded', () => {
+		twemoji.parse(document.body, {
+			folder: 'svg',
+			ext: '.svg'
+		});
+	});
+</script>

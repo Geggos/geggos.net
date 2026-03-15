@@ -3,27 +3,28 @@ const today = new Date();
 ---
 
 <footer>
-    <div class="footer-top flex flex-row justify-between items-center">
-        <div class="flex items-center">
-            <span>
-                Copyright &copy; {today.getFullYear()} BerryCo - All Rights Reserved.
-            </span>
+    <div class="flex flex-col md:flex-row px-4 py-6 items-center justify-between md:px-8 max-w-7xl mx-auto gap-4">
+        <div class="flex flex-col gap-1">
+            <span>🍓 Powered by <a>BerryCo</a></span>
+            <span>❤️ Website by <a href="https://buh.moe" target="_blank">amemoia</a></span>
+            <!-- <span>❤️ Website by <a href="https://buh.moe" target="_blank">amemoia</a></span> -->
         </div>
-        <div class="flex items-center">
-            <span>Powered by BerryCo</span>
+        <div class="flex flex-col gap-1 text-right">
+            <span>Copyright &copy; {today.getFullYear()} BerryCo - All Rights Reserved</span>
+            <a href="/private-policy">Private Policy</a>
         </div>
-    </div>
-    <div class="footer-bottom text-center mt-4">
-        <a href="./private-policy">PRIVATE POLICY</a>
     </div>
 </footer>
 <style>
     footer {
-        width: 100%;
-        padding: 2em 4em;
-        background-color: var(--bg-accent);
+        border-top: 2px dashed var(--bg-accent);
+        background-color: var(--bg-accent-transparenter);
+        margin-top: 4em;
     }
     footer > div {
         width: 100%;
+    }
+    footer a {
+        font-weight: 600;
     }
 </style>

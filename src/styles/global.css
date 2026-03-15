@@ -10,13 +10,18 @@
 }
 
 html {
-    font-family: "Poppins", system-ui, sans-serif;
+    font-family: "Fredoka", system-ui, sans-serif;
 }
 
 :root {
     --bg-accent: rgb(237, 171, 234);
-    --text-accent: rgb(194, 124, 191);
-    --font-cute: "Fredoka";
+    --bg-accent-transparent: rgba(237, 171, 234, 0.5);
+    --bg-accent-transparenter: rgba(237, 171, 234, 0.25);
+    --accent-secondary: hsl(272, 40%, 50%);
+    --accent-tetriary: hsl(265, 40%, 50%);
+    --accent: hsl(290, 50%, 60%);
+    --accent-old: hsl(303, 36%, 62%);
+    --accent-alternate: hsl(15, 100%, 75%);
 }
 
 body {
@@ -26,8 +31,24 @@ body {
     overflow-x: hidden;
 }
 
+/*
+    cute little background gradient practically copied from buh.moe :oopsie:
+*/
+body::before {
+    content: '';
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(237, 171, 234, 0.3) 0%, rgba(237, 171, 234, 0.15) 35%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+}
+
 main {
-    width: 50%;
+    max-width: 1280px;
+    padding: 0em 2em;
     display: flex;
     flex-direction: column;
     align-self: center;
@@ -46,7 +67,6 @@ hr {
     align-self: center;
     opacity: 0.1;
     margin: 1em 0em;
-    margin-bottom: 4em;
     border-width: 2px;
     border-radius: 4px;
 }
@@ -54,8 +74,45 @@ h1 {
     text-align: center;
     font-size: 3em;
     font-weight: bold;
-    color: var(--text-accent);
-    font-family: var(--font-cute);
+    color: var(--accent-secondary);
+    /* EVIL FUCKED UP SHADOW HACK DONT ASK */
+    text-shadow:
+        -3px -3px 0 white,
+        3px -3px 0 white,
+        -3px 3px 0 white,
+        3px 3px 0 white,
+        -3px 0 0 white,
+        3px 0 0 white,
+        0 -3px 0 white,
+        0 3px 0 white,
+        -3px 6px 0px rgba(0, 0, 0, 0.35);
+    flex-shrink: 0;
+    transition: transform 50ms;
+    user-select: none;
+    cursor: pointer;
+    width: fit-content;
+    align-self: center;
+}
+
+h1:hover {
+    transform: rotate(-1deg);
+}
+
+h1:active {
+    transform: scale(0.95);
+}
+
+.color-accent {
+    color: var(--accent);
+}
+
+/* Twemoji */
+img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+    display: inline-block;
 }
 
 .poppins-thin {
@@ -165,3 +222,4 @@ h1 {
     font-weight: 900;
     font-style: italic;
 }
+
