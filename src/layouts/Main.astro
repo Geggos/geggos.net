@@ -23,10 +23,14 @@ import { ClientRouter } from "astro:transitions";
 
 <script>
 	import twemoji from 'twemoji';
-	document.addEventListener('DOMContentLoaded', () => {
+
+	const parseTwemoji = () => {
 		twemoji.parse(document.body, {
 			folder: 'svg',
 			ext: '.svg'
 		});
-	});
+	};
+
+	document.addEventListener('DOMContentLoaded', parseTwemoji);
+	document.addEventListener('astro:after-swap', parseTwemoji);
 </script>
