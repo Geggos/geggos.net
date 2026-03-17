@@ -2,15 +2,17 @@
 import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
 import geggobanner from "../assets/geggobanner.png";
-import buh from "../assets/ezgif.com-optiwebp.webp";
+import buh from "../assets/wip.png";
 
 ---
 <Main>
-    <div class="w-screen relative left-1/2 -translate-x-1/2">
+    <div class="image-container flex flex-col items-center justify-end w-screen relative left-1/2 -translate-x-1/2">
         <Image
             src={geggobanner}
             alt="a banner of Geggos and his friends"
-            class="index-banner shadow-md"
+            class="index-banner"
+            width={2048}
+            height={1152}
         />
     </div>
     <div class="my-16 text-center flex flex-col">
@@ -26,10 +28,30 @@ import buh from "../assets/ezgif.com-optiwebp.webp";
 
 <style>
     .index-banner {
-        width: 100%;
-        max-height: 600px;
         object-fit: cover;
-        object-position: center -32px;
+        object-position: center top;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .image-container {
+        pointer-events: none;
+        user-select: none;
+        height: 400px;
+        width: 100vw;
+        background-color: rgb(255, 245, 255);
+        border-bottom: 4px solid var(--bg-accent-transparent);
+    }
+
+    @media (max-width: 768px) {
+        .image-container {
+            height: 250px;
+        }
+        .index-banner {
+            height: 95%;
+        }
     }
     
     h1:hover {

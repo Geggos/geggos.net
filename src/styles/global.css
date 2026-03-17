@@ -11,20 +11,35 @@
 
 html {
     font-family: "Fredoka", system-ui, sans-serif;
+    /*
+        overflow rubberband on mobile devices determines the color from the html element
+    */
+    background-color: var(--bg-accent-transparent);
 }
 
 :root {
     --bg-accent: rgb(237, 171, 234);
-    --bg-accent-transparent: rgba(237, 171, 234, 0.5);
-    --bg-accent-transparenter: rgba(237, 171, 234, 0.25);
+    --bg-accent-transparent: rgb(249, 226, 248);
+    --bg-accent-transparenter: rgb(251, 234, 250);
     --accent-secondary: hsl(272, 40%, 50%);
+    --accent-secondary-inactive: hsl(272, 28%, 40%);
+    --accent-secondary-inactive-hover: hsl(272, 35%, 35%);
     --accent-tetriary: hsl(265, 40%, 50%);
+    --accent-tetriary-inactive: hsl(265, 28%, 40%);
+    --accent-tetriary-inactive-hover: hsl(265, 35%, 35%);
     --accent: hsl(290, 50%, 60%);
+    --accent-inactive: hsl(290, 35%, 45%);
+    --accent-inactive-hover: hsl(290, 42%, 40%);
     --accent-old: hsl(303, 36%, 62%);
+    --accent-old-inactive: hsl(303, 26%, 45%);
+    --accent-old-inactive-hover: hsl(303, 32%, 40%);
     --accent-alternate: hsl(15, 100%, 75%);
+    --accent-alternate-inactive: hsl(15, 60%, 50%);
+    --accent-alternate-inactive-hover: hsl(15, 75%, 45%);
 }
 
 body {
+    background-color: white;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -75,7 +90,7 @@ h1 {
     font-size: 3em;
     font-weight: bold;
     color: var(--accent-secondary);
-    /* EVIL FUCKED UP SHADOW HACK DONT ASK */
+    /* EVIL FUCKED UP SHADOW PLUS OUTLINE HACK DONT ASK */
     text-shadow:
         -3px -3px 0 white,
         3px -3px 0 white,

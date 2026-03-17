@@ -11,11 +11,11 @@ const isActive = (href: string) => {
 };
 
 const linkClass =
-    "text-lg font-medium text-gray-600 hover:text-gray-900 transition-colors";
+    "text-lg link-a text-gray-600 hover:text-gray-900 transition-colors";
 const activeClass =
-    "text-lg font-bold text-black color-accent";
+    "text-lg link-active";
 const click_anim =
-    "shrink-0 transition-transform duration-100 hover:-rotate-3 active:scale-90"
+    "transition-transform duration-100 hover:-rotate-3 active:scale-90 select-none"
 
 
 const links = [
@@ -29,7 +29,7 @@ const links = [
 ];
 ---
 
-<header class="w-full bg-white shadow-sm z-50 relative">
+<header class="w-full shadow-sm z-50 relative">
     <nav class="flex flex-col md:flex-row items-center justify-between px-4 py-2 md:px-8 max-w-7xl mx-auto gap-4">
         <!-- Logo -->
         <a
@@ -39,7 +39,7 @@ const links = [
             <Image
                 src={geggonet}
                 alt="Geggos.net logo"
-                class="h-16 w-auto object-contain"
+                class="h-16 w-auto object-contain pointer-events-none select-none"
                 loading="eager"
                 transition:name="header-logo"
             />
@@ -63,3 +63,46 @@ const links = [
         </div>
     </nav>
 </header>
+
+<style>
+    header {
+        background-color: var(--bg-accent-transparent);
+        border-bottom: 2px dashed var(--bg-accent);
+    }
+    @media (max-width: 768px) {
+        header {
+            padding: 0em 1em 1em 1em;
+        }
+    }
+    .link-a {
+        pointer-events: ;
+        color: var(--accent-secondary-inactive);
+        text-align: center;
+        font-weight: bold;
+        /* EVIL FUCKED UP SHADOW PLUS OUTLINE HACK DONT ASK */
+        text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px 1px 0 white,
+            1px 1px 0 white,
+            -1px 0 0 white,
+            1px 0 0 white,
+            0 -1px 0 white,
+            0 1px 0 white,
+            -1px 3px 0px rgba(0, 0, 0, 0.35);
+        contain: layout;
+    }
+    .link-a:hover{
+        color: var(--accent-secondary-inactive-hover);
+        transform: rotate(3deg);
+    }
+    .link-active {
+        color: var(--accent-secondary);
+        rotate: 3deg;
+        contain: layout;
+    }
+    .link-active:hover {
+        transform: none;
+        color: var(--accent-secondary);
+    }
+</style>

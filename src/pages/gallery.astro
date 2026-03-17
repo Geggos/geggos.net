@@ -1,10 +1,10 @@
 ---
 import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
-import geggobanner from "../assets/geggobanner.png";
-import buh from "../assets/ezgif.com-optiwebp.webp";
 import placeholder from "../assets/blog-placeholder-3.jpg"
-import bannerPixelmon from "../assets/gallery-banners/pixelmon.webp";
+import galleryComics from '../assets/gallery-banners/banner_3.png'
+import galleryMisc from '../assets/gallery-banners/geggobanner.png'
+import galleryChristmas from '../assets/gallery-banners/hohoohohoh.png'
 ---
 
 <Main>
@@ -15,19 +15,19 @@ import bannerPixelmon from "../assets/gallery-banners/pixelmon.webp";
         <div class="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-2 self-center">
             <a class="gallery-link relative">
                 <div class="gallery-section shadow-md">
-                    <Image src={placeholder} alt="placeholder" />
+                    <Image src={galleryComics} alt="placeholder" class="object-right" />
                     <p class="font-cute font-semibold text-2xl color-accent">Comics</p>
                 </div>
             </a>
             <a class="gallery-link relative">
                 <div class="gallery-section shadow-md">
-                    <Image src={bannerPixelmon} alt="placeholder" class="object-left" />
-                    <p class="font-cute font-semibold text-2xl color-accent">Pixelmon / Cobblemon</p>
+                    <Image src={galleryMisc} alt="placeholder" class="object-top" />
+                    <p class="font-cute font-semibold text-2xl color-accent">Misc</p>
                 </div>
             </a>
             <a class="gallery-link relative">
                 <div class="gallery-section shadow-md">
-                    <Image src={placeholder} alt="placeholder" />
+                    <Image src={galleryChristmas} alt="placeholder" class="object-right" />
                     <p class="font-cute font-semibold text-2xl color-accent">Christmas</p>
                 </div>
             </a>
@@ -46,6 +46,7 @@ import bannerPixelmon from "../assets/gallery-banners/pixelmon.webp";
         position: relative;
         display: flex;
         flex-direction: column;
+        gap: 1em;
     }
 
     .gallery-link {
@@ -76,13 +77,8 @@ import bannerPixelmon from "../assets/gallery-banners/pixelmon.webp";
         pointer-events: none;
     }
     .gallery-section > p {
-        margin-top: 1em;
-        margin-bottom: 0.5em;
-        min-height: 2.8em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+        align-self: center;
+        padding-bottom: 0.5em;
     }
     @media (min-width: 768px) and (max-width: 1023px) {
         .gallery-grid > :last-child:nth-child(odd) {

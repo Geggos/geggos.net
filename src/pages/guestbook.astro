@@ -2,16 +2,18 @@
 import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
 import geggobanner from "../assets/geggobanner.png";
-import buh from "../assets/ezgif.com-optiwebp.webp";
+import buh from "../assets/wip.png";
 ---
 
 <Main>
     <div class="my-16 text-center flex flex-col">
-        <h1>Gallery</h1>
+        <h1>Guestbook</h1>
         <hr />
         the buh is still working on this.
         <Image
             src={buh}
+            width={300}
+            height={300}
             alt="the buh is working very hard."
             class="self-center"
         />
