@@ -22,8 +22,8 @@ html {
     --bg-accent-transparent: rgb(249, 226, 248);
     --bg-accent-transparenter: rgb(251, 234, 250);
     --accent-secondary: hsl(272, 40%, 50%);
-    --accent-secondary-inactive: hsl(272, 28%, 40%);
-    --accent-secondary-inactive-hover: hsl(272, 35%, 35%);
+    --accent-secondary-inactive: hsl(272, 22%, 40%);
+    --accent-secondary-inactive-hover: hsl(272, 35%, 40%);
     --accent-tetriary: hsl(265, 40%, 50%);
     --accent-tetriary-inactive: hsl(265, 28%, 40%);
     --accent-tetriary-inactive-hover: hsl(265, 35%, 35%);
