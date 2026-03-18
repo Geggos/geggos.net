@@ -46,12 +46,19 @@ import buh from "../assets/wip.png";
         border-bottom: 4px solid var(--bg-accent-transparent);
     }
 
+    body::before {
+        top: 482px;
+    }
+
     @media (max-width: 768px) {
         .image-container {
             height: 250px;
         }
         .index-banner {
             height: 95%;
+        }
+        body::before {
+            top: 428px;
         }
     }
     

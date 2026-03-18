@@ -14,7 +14,7 @@ html {
     /*
         overflow rubberband on mobile devices determines the color from the html element
     */
-    background-color: var(--bg-accent-transparent);
+    background-color: rgb(249, 226, 248);
 }
 
 :root {
@@ -39,7 +39,7 @@ html {
 }
 
 body {
-    background-color: white;
+    background-color: rgb(249, 226, 248);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -56,8 +56,9 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(ellipse 110% 60% at 50% 0%, rgba(237, 171, 234, 0.3) 0%, rgba(237, 171, 234, 0.15) 35%, transparent 60%);
+    background: radial-gradient(ellipse 110% 60% at 50% 0%, rgb(250, 230, 249) 0%, rgb(252, 242, 252) 35%, white 60%);
     pointer-events: none;
+    height: 100%;
     z-index: -1;
 }
 
@@ -74,6 +75,9 @@ main {
 @media (max-width: 768px) {
     main {
         width: 90%;
+    }
+    body::before {
+        top: 178px;
     }
 }
 
