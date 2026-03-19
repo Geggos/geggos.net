@@ -5,12 +5,12 @@ const today = new Date();
 <footer>
     <div class="flex flex-col md:flex-row px-4 py-6 items-center justify-between md:px-8 max-w-7xl mx-auto gap-4">
         <div class="flex flex-col gap-1">
-            <span>🍓 Powered by <a>BerryCo</a></span>
-            <!-- <span>❤️ Website by <a href="https://buh.moe" target="_blank">amemoia</a></span> -->
+            <span>🍓 Powered by <a class="fancy">Geggos</a></span>
+            <span>❤️ Website by <a href="https://buh.moe" target="_blank" class="fancy amemoia">amemoia</a></span>
         </div>
         <div class="flex flex-col gap-1 text-center md:text-right">
-            <span>Copyright &copy; {today.getFullYear()} BerryCo - All Rights Reserved</span>
-            <a href="/private-policy">Private Policy</a>
+            <a href="/private-policy" class="fancy">Private Policy</a>
+            <span>&copy; {today.getFullYear()} BerryCo - All Rights Reserved</span>
         </div>
     </div>
 </footer>
@@ -24,7 +24,32 @@ const today = new Date();
     footer > div {
         width: 100%;
     }
-    footer a {
-        font-weight: 600;
+    .fancy {
+        display: inline-block;
+        width: fit-content;
+        color: var(--accent-secondary-inactive);
+        font-weight: bold;
+        /* EVIL FUCKED UP SHADOW PLUS OUTLINE HACK DONT ASK */
+        text-shadow:
+            -1px -1px 0 white,
+            1px -1px 0 white,
+            -1px 1px 0 white,
+            1px 1px 0 white,
+            -1px 0 0 white,
+            1px 0 0 white,
+            0 -1px 0 white,
+            0 1px 0 white,
+            -1px 3px 0px rgba(0, 0, 0, 0.35);
+        transition: transform 50ms, color 50ms;
+    }
+    .fancy:hover {
+        color: var(--accent-secondary-inactive-hover);
+        transform: rotate(2deg);
+    }
+    .amemoia {
+        color: hsl(354, 45%, 54%) !important;
+    }
+    .amemoia:hover {
+        color: hsl(354, 55%, 54%) !important;
     }
 </style>
