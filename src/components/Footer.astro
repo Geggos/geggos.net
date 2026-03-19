@@ -5,10 +5,10 @@ const today = new Date();
 <footer>
     <div class="flex flex-col md:flex-row px-4 py-6 items-center justify-between md:px-8 max-w-7xl mx-auto gap-4">
         <div class="flex flex-col gap-1">
-            <span>🍓 Powered by <a class="fancy">Geggos</a></span>
+            <span>🍓 Powered by <a href="#top" class="fancy geggos">Geggos</a></span>
             <span>❤️ Website by <a href="https://buh.moe" target="_blank" class="fancy amemoia">amemoia</a></span>
         </div>
-        <div class="flex flex-col gap-1 text-center md:text-right">
+        <div class="flex flex-col gap-1 items-center text-center md:text-right">
             <a href="/private-policy" class="fancy">Private Policy</a>
             <span>&copy; {today.getFullYear()} BerryCo - All Rights Reserved</span>
         </div>
@@ -50,5 +50,11 @@ const today = new Date();
     }
     .amemoia:hover {
         color: hsl(354, 55%, 54%) !important;
+    }
+    .geggos {
+        color: hsl(47, 85%, 50%) !important;
+    }
+    .geggos:hover {
+        color: hsl(47, 85%, 60%) !important;
     }
 </style>
