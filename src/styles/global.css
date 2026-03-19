@@ -62,7 +62,7 @@ main {
 }
 
 .content {
-    padding: 0em 2em;
+    padding: 0;
     max-width: 1200px;
     align-self: center;
 }
