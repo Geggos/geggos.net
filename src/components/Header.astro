@@ -11,9 +11,9 @@ const isActive = (href: string) => {
 };
 
 const linkClass =
-    "text-lg link-a text-gray-600 hover:text-gray-900 transition-colors";
+    "text-xl md:text-lg link-a text-gray-600 hover:text-gray-900 transition-colors";
 const activeClass =
-    "text-lg link-active";
+    "text-xl md:text-lg link-active";
 const click_anim =
     "transition-transform duration-100 hover:-rotate-3 active:scale-90 select-none"
 
@@ -46,7 +46,7 @@ const links = [
         </a>
 
         <!-- Links -->
-        <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 font-cute">
+        <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-4 font-cute">
             {
                 links.map((link) => (
                     <a
@@ -75,7 +75,6 @@ const links = [
         }
     }
     .link-a {
-        pointer-events: ;
         color: var(--accent-secondary-inactive);
         text-align: center;
         font-weight: bold;
