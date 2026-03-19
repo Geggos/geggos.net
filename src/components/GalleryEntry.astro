@@ -1,0 +1,11 @@
+---
+import { Image } from "astro:assets";
+var { image, label, alt, classes } = Astro.props;
+if (classes == null) classes = ""
+---
+<a class="gallery-link relative">
+    <div class="gallery-section shadow-md">
+        <Image src={image} alt={alt} class={classes} />
+        <p class="font-cute font-semibold text-2xl color-accent">{label}</p>
+    </div>
+</a>

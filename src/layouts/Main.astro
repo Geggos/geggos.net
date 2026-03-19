@@ -15,7 +15,9 @@ import { ClientRouter } from "astro:transitions";
     <body transition:animate="none">
         <Header />
         <main>
-            <slot />
+            <div class="content">
+                <slot />
+            </div>
         </main>
         <Footer />
     </body>

@@ -15,7 +15,7 @@ import buh from "../assets/wip.png";
             height={1152}
         />
     </div>
-    <div class="my-16 text-center flex flex-col">
+    <div class="my-16 text-center flex flex-col px-6">
         <h1>Welcome to Geggos.net!</h1>
         <hr />
         <div class="flex flex-col">
@@ -27,6 +27,9 @@ import buh from "../assets/wip.png";
 </Main>
 
 <style>
+    .content {
+        padding: 0 !important;
+    }
     .index-banner {
         object-fit: cover;
         object-position: center top;
@@ -54,11 +57,14 @@ import buh from "../assets/wip.png";
             height: 95%;
         }
     }
-    
-    h1:hover {
-        transform: rotate(-0.5deg) !important;
+
+    @media (hover:hover){
+        h1:hover {
+            transform: rotate(-0.5deg) !important;
+        }
+        h1:active {
+            transform: scale(0.95) !important;
+        }
     }
-    h1:active {
-        transform: scale(0.95) !important;
-    }
+
 </style>
