@@ -6,7 +6,7 @@ import buh from "../assets/wip.png";
 
 ---
 <Main>
-    <div class="image-container flex flex-col items-center justify-end w-full">
+    <div class="image-container flex flex-col items-center w-full relative left-1/2 -translate-x-1/2 overflow-hidden">
         <Image
             src={geggobanner}
             alt="a banner of Geggos and his friends"
@@ -18,16 +18,18 @@ import buh from "../assets/wip.png";
     <div class="my-16 text-center flex flex-col px-6">
         <h1>Welcome to Geggos.net!</h1>
         <hr />
-        <div class="index-content">
-            <hr />
-            <div class="content-section">
-                Content goes here
+        <div class="index-content grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+            <div class="left-column flex flex-col gap-8">
+                <div class="content-section py-8">
+                    top left
+                </div>
+                <div class="content-section py-8">
+                    bottom left
+                </div>
             </div>
-            <hr />
-            <div class="content-section">
-                More content goes here
+            <div class="right-column md:row-span-2">
+                right column
             </div>
-            <hr />
         </div>
     </div>
 </Main>
@@ -41,10 +43,6 @@ import buh from "../assets/wip.png";
         pointer-events: none;
         user-select: none;
         max-width: 1300px;
-    }
-
-    .content-section {
-        padding: 2rem 0;
     }
 
     .image-container {
