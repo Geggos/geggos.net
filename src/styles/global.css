@@ -12,9 +12,10 @@
 html {
     font-family: "Fredoka", system-ui, sans-serif;
     /*
-        overflow rubberband on mobile devices determines the color from the html element
+        overscroll rubberband on mobile devices determines the color from the html element
     */
     background-color: rgb(249, 226, 248);
+    overflow-x: hidden;
 }
 
 :root {
