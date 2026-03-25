@@ -18,11 +18,17 @@ const click_anim =
     "transition-transform duration-100 hover:-rotate-3 active:scale-90 select-none"
 
 
-const links = [
+type NavLink = {
+    href: string;
+    label: string;
+    target?: "_blank";
+};
+
+const links: NavLink[] = [
     { href: "/", label: "Home" },
     { href: "/projects", label: "Projects" },
     { href: "/blog", label: "Blog" },
-    { href: "/gallery", label: "Gallery" },
+    { href: "/gallery", label: "Gallery", target: "_blank" },
     { href: "/ask", label: "Ask" },
     { href: "/guestbook", label: "Guestbook" },
     { href: "/archive", label: "Archive" },
@@ -51,6 +57,8 @@ const links = [
                 links.map((link) => (
                     <a
                         href={link.href}
+                        target={link.target}
+                        rel={link.target === "_blank" ? "noopener noreferrer" : undefined}
                         class:list={[
                             linkClass,
                             isActive(link.href) && activeClass,
