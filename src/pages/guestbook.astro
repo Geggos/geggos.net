@@ -1,0 +1,28 @@
+---
+import Main from "../layouts/Main.astro";
+---
+
+<Main>
+    <div class="my-16 text-center flex flex-col guestbook-page">
+        <h1 class="mb-8">Guestbook</h1>
+        <iframe src="https://geggos.atabook.org/" title="geggosbook" class="guestbook-iframe shadow-md"></iframe>
+    </div>
+</Main>
+
+<style>
+    :global(main > .content) {
+        width: 100%;
+    }
+
+    .guestbook-page {
+        width: 100%;
+    }
+    .guestbook-iframe {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 32px;
+        width: 100%;
+        max-width: 768px;
+        height: 100vh;
+        align-self: center;
+    }
+</style>
