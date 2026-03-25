@@ -3,6 +3,7 @@ import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
 import geggobanner from "../assets/geggobanner.png";
 import buh from "../assets/wip.png";
+import LetterboxdWidget from "../components/LetterboxdWidget.astro";
 
 ---
 <Main>
@@ -12,7 +13,7 @@ import buh from "../assets/wip.png";
             alt="a banner of Geggos and his friends"
             class="index-banner"
             width={2048}
-            height={1152}
+            height={940}
         />
     </div>
     <div class="my-16 text-center flex flex-col px-6">
@@ -21,14 +22,14 @@ import buh from "../assets/wip.png";
         <div class="mt-8 index-content grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
             <div class="left-column flex flex-col gap-8">
                 <div class="content-section">
-                    top left
+                    Discord Widget here
                 </div>
                 <div class="content-section">
-                    bottom left
+                    <LetterboxdWidget />
                 </div>
             </div>
             <div class="right-column md:row-span-2">
-                right column
+                time, current project, most recent blog post
             </div>
         </div>
     </div>
