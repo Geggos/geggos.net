@@ -1,10 +1,14 @@
 ---
 import Main from "../layouts/Main.astro";
+import Image from "astro/components/Image.astro";
+import h_guestbook from "../assets/headers/guestbook.png"
 ---
 
 <Main>
-    <div class="my-16 text-center flex flex-col guestbook-page">
-        <h1 class="mb-8">Guestbook</h1>
+    <div class="my-8 text-center flex flex-col guestbook-page">
+        <Image src={h_guestbook} alt="Guestbook" class="custom-header" width={400} />
+        <hr />
+        <span class="my-8 text-xl">Hello friends! leave your mark on geggos.net!</span>
         <iframe id="ata" src="https://geggos.atabook.org/" title="geggosbook" class="guestbook-iframe shadow-md"></iframe>
     </div>
 </Main>
@@ -33,5 +37,10 @@ import Main from "../layouts/Main.astro";
         height: 100vh;
         align-self: center;
         background-color: var(--bg-accent-transparenter);
+    }
+    @media (max-width: 768px) {
+        :global(main) {
+            padding: 0 1em 3em !important;
+        }
     }
 </style>

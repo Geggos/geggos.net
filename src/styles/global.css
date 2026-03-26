@@ -77,6 +77,15 @@ hr {
     border-radius: 4px;
 }
 
+.custom-header {
+    transition: transform 50ms;
+    user-select: none;
+    cursor: pointer;
+    width: fit-content;
+    align-self: center;
+    image-rendering: auto;
+}
+
 h1 {
     text-align: center;
     font-size: 3em;
@@ -116,6 +125,12 @@ h1 {
         transform: rotate(-1deg);
     }
     h1:active {
+        transform: scale(0.95);
+    }
+    .custom-header:hover {
+        transform: rotate(-1deg);
+    }
+    .custom-header:active {
         transform: scale(0.95);
     }
 
