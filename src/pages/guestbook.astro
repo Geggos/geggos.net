@@ -6,7 +6,7 @@ import h_guestbook from "../assets/headers/guestbook.png"
 
 <Main>
     <div class="my-8 text-center flex flex-col guestbook-page">
-        <Image src={h_guestbook} alt="Guestbook" class="custom-header" width={400} />
+        <Image src={h_guestbook} alt="Guestbook" class="custom-header" width={400} height={(h_guestbook.height/h_guestbook.width)*400} />
         <hr />
         <span class="my-8 text-xl">Hello friends! leave your mark on geggos.net!</span>
         <iframe id="ata" src="https://geggos.atabook.org/" title="geggosbook" class="guestbook-iframe shadow-md"></iframe>
@@ -33,7 +33,7 @@ import h_guestbook from "../assets/headers/guestbook.png"
         border: 4px solid var(--bg-accent-transparent);
         border-radius: 32px;
         width: 100%;
-        max-width: 768px;
+        max-width: 840px;
         height: 100vh;
         align-self: center;
         background-color: var(--bg-accent-transparenter);
