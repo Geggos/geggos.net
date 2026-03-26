@@ -7,11 +7,12 @@ import galleryMisc from '../assets/gallery-banners/geggobanner.png'
 import galleryChristmas from '../assets/gallery-banners/hohoohohoh.png'
 import GalleryView from "../components/GalleryView.astro";
 import GalleryEntry from "../components/GalleryEntry.astro";
+import h_gallery from "../assets/headers/gallery.png"
 ---
 
 <Main>
     <div class="my-8 text-center flex flex-col">
-        <h1>Gallery</h1>
+        <Image src={h_gallery} alt="Guestbook" class="custom-header" width={300} height={(h_gallery.height/h_gallery.width)*300} />
         <hr />
         <span class="my-8 font-cute text-xl">placeholder placeholder buh buh buh lorem ipsum lorem ipsum buh i really like burgers</span>
         <GalleryView>
