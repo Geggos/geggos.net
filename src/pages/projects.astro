@@ -3,13 +3,14 @@ import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
 import geggobanner from "../assets/geggobanner.png";
 import buh from "../assets/wip.png";
+import h_projects from "../assets/headers/projects.png"
 ---
 
 <Main>
     <div class="my-8 text-center flex flex-col">
-        <h1>Projects</h1>
+        <Image src={h_projects} alt="Projects" class="custom-header" height={250} />
         <hr />
-        the buh is still working on this.
+        <span class="my-8 font-cute text-xl">What is Geggos up to?</span>
         <Image
             src={buh}
             width={300}
@@ -17,14 +18,6 @@ import buh from "../assets/wip.png";
             alt="the buh is working very hard."
             class="self-center"
         />
+        <span>buh is still working on this...</span>
     </div>
 </Main>
-
-<style>
-    .index-banner {
-        width: 100%;
-        max-height: 600px;
-        object-fit: cover;
-        object-position: center -32px;
-    }
-</style>

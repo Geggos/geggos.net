@@ -1,64 +1,22 @@
 ---
+import Main from "../../layouts/Main.astro";
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
-import BaseHead from "../../components/BaseHead.astro";
-import Footer from "../../components/Footer.astro";
-import FormattedDate from "../../components/FormattedDate.astro";
-import Header from "../../components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
-import buh from "../../assets/ezgif.com-optiwebp.webp";
-
-const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+import buh from "../../assets/wip.png";
+import h_blog from "../../assets/headers/blog.png"
 ---
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    </head>
-    <body>
-        <Header />
-        <main>
-            <div class="my-8 text-center flex flex-col">
-                <!--
-                <ul>
-                    {
-                        posts.map((post) => (
-                            <li>
-                                <a href={`/blog/${post.id}/`}>
-                                    {post.data.heroImage && (
-                                        <Image
-                                            width={720}
-                                            height={360}
-                                            src={post.data.heroImage}
-                                            alt=""
-                                        />
-                                    )}
-                                    <h4 class="title">{post.data.title}</h4>
-                                    <p class="date">
-                                        <FormattedDate
-                                            date={post.data.pubDate}
-                                        />
-                                    </p>
-                                </a>
-                            </li>
-                        ))
-                    }
-                </ul>
-                -->
-
-                <h1>Welcome to Geggos.net!</h1>
-                <hr />
-                the buh is still working on this.
-                <Image
-                    src={buh}
-                    alt="the buh is working very hard."
-                    class="self-center"
-                />
-            </div>
-        </main>
-        <Footer />
-    </body>
-</html>
+<Main>
+    <div class="my-8 text-center flex flex-col">
+        <Image src={h_blog} alt="Blog" class="custom-header" height={250} />
+        <hr />
+        <span class="my-8 text-xl">Thoughts, rants and gossip all from the mind of a Geggos.</span>
+        <Image
+            src={buh}
+            width={300}
+            height={300}
+            alt="the buh is working very hard."
+            class="self-center"
+        />
+        <span>buh is still working on this...</span>
+    </div>
+</Main>
