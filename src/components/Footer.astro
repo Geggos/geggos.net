@@ -23,28 +23,6 @@ const today = new Date();
     footer > div {
         width: 100%;
     }
-    .fancy {
-        display: inline-block;
-        width: fit-content;
-        color: var(--accent-secondary-inactive);
-        font-weight: bold;
-        /* EVIL FUCKED UP SHADOW PLUS OUTLINE HACK DONT ASK */
-        text-shadow:
-            -1px -1px 0 white,
-            1px -1px 0 white,
-            -1px 1px 0 white,
-            1px 1px 0 white,
-            -1px 0 0 white,
-            1px 0 0 white,
-            0 -1px 0 white,
-            0 1px 0 white,
-            -1px 3px 0px rgba(0, 0, 0, 0.35);
-        transition: transform 50ms, color 50ms;
-    }
-    .fancy:hover {
-        color: var(--accent-secondary-inactive-hover);
-        transform: rotate(2deg);
-    }
     .amemoia {
         color: hsl(354, 45%, 54%) !important;
     }

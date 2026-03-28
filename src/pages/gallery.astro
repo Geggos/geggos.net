@@ -5,7 +5,6 @@ import placeholder from "../assets/blog-placeholder-3.jpg"
 import galleryComics from '../assets/gallery-banners/banner_3.png'
 import galleryMisc from '../assets/gallery-banners/geggobanner.png'
 import galleryChristmas from '../assets/gallery-banners/hohoohohoh.png'
-import GalleryView from "../components/GalleryView.astro";
 import GalleryEntry from "../components/GalleryEntry.astro";
 import h_gallery from "../assets/headers/gallery.png"
 ---
@@ -15,7 +14,7 @@ import h_gallery from "../assets/headers/gallery.png"
         <Image src={h_gallery} alt="Gallery" class="custom-header" height={250} />
         <hr />
         <span class="my-8 font-cute text-xl">Collections of my greatest memories captured through art, screenshots and more!</span>
-        <GalleryView>
+        <div class="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 self-center">
             <GalleryEntry
                 image={galleryComics}
                 label="Comics"
@@ -34,6 +33,6 @@ import h_gallery from "../assets/headers/gallery.png"
                 alt="Geggos dragging a santa sleigh with two friends in it"
                 classes="object-right"
             />
-        </GalleryView>
+        </div>
     </div>
 </Main>

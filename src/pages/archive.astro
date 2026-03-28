@@ -3,6 +3,8 @@ import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
 import buh from "../assets/wip.png";
 import h_archive from "../assets/headers/archive.png"
+import { Icon } from "astro-icon/components";
+import Pixelmon from "../assets/gallery-banners/pixelmon.webp"
 ---
 
 <Main>
@@ -10,13 +12,74 @@ import h_archive from "../assets/headers/archive.png"
         <Image src={h_archive} alt="Archive" class="custom-header" height={250} />
         <hr />
         <span class="my-8 font-cute text-xl">Walk back through memory lane with an archive of old events, galleries and projects.</span>
-        <Image
-            src={buh}
-            width={300}
-            height={300}
-            alt="the buh is working very hard."
-            class="self-center"
-        />
-        <span>buh is still working on this...</span>
+        <div class="flex flex-col gap-2">
+            <div class="flex flex-row archive-entry shadow-md">
+                <div class="flex flex-col items-start self-start p-4">
+                    <span class="text-2xl fancy accent-secondary">Pixelmon / Cobblemon</span>
+                    <span class="flex flex-row gap-2">
+                        <span class="block text-sm font-semibold">
+                            <Icon name="fa6-solid:calendar" />
+                            Mar 2026
+                        </span>
+                    </span>
+                    <span class="text-left">
+                        some kind of description here i like burgers i like burgers i like burgers i like burgers i like burgers i like burgers i like burgers 
+                    </span>
+                </div>
+                <Image
+                    src={Pixelmon}
+                    alt="test"
+                    class="archive-image object-left"
+                />
+            </div>
+        </div>
     </div>
 </Main>
+
+<style>
+    .archive-entry {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        min-height: max-content;
+    }
+
+    @media (min-width: 768px) {
+        .archive-entry {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .archive-image {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        object-fit: cover;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        mask-image: linear-gradient(to bottom, transparent 0%, white 40%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, white 40%);
+    }
+
+    @media (min-width: 768px) {
+        .archive-image {
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            mask-image: linear-gradient(to right, transparent 0%, white 40%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, white 40%);
+        }
+    }
+
+    @media (hover: hover) {
+        .fancy:hover:not(:active) {
+            transform: rotate(-0.5deg);
+            color: var(--accent-secondary);
+        }
+        .fancy:hover {
+            color: var(--accent-secondary)
+        }
+    }
+</style>

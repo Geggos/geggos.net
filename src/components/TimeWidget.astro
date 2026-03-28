@@ -1,0 +1,84 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+<div class="clock-container">
+    <div class="text-xl text-center self-center clock-header fancy">Clock</div>
+    <div class="clock-display shadow-md gap-2">
+        <div class="clock-time-row block text-4xl font-bold">
+            <Icon name="fa6-solid:clock" class="clock-icon" />
+            <span class="clock-time" id="clock-time">--:--:--</span>
+        </div>
+        <span class="flex flex-row gap-2 accent-secondary font-semibold self-center">
+            <span>Timezone:</span>
+            <span class="clock-timezone text-sm font-semibold block">
+                <Icon name="fa6-solid:earth-americas"/>
+                <span id="clock-timezone">Loading...</span>
+            </span>
+        </span>
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        
+        const UKTime = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Europe/London',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        }).format(now);
+        
+        const timeElement = document.getElementById('clock-time');
+        const timezoneElement = document.getElementById('clock-timezone');
+        
+        if (timeElement) timeElement.textContent = UKTime;
+        if (timezoneElement) timezoneElement.textContent = 'GMT (UK)';
+    }
+    
+    updateClock();
+    setInterval(updateClock, 1000);
+</script>
+
+<style>
+    .clock-container {
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        gap: 0.5em;
+        padding: 0.5em;
+    }
+
+    .clock-time-row {
+        width: 5em;
+        text-align: center;
+        align-self: center;
+        justify-content: center;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    #clock-time, .clock-header, .clock-icon {
+        color: var(--accent);
+    }
+
+    @media (hover: hover) {
+        .clock-header.fancy:hover:not(:active) {
+            transform: rotate(-1deg);
+        }
+    }
+    
+    .clock-display {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 16px;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+    }
+    .clock-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        flex-shrink: 0;
+    }
+</style>

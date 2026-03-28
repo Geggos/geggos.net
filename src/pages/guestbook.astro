@@ -15,10 +15,13 @@ import h_guestbook from "../assets/headers/guestbook.png"
 
 <script src="https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.5.9"></script>
 <script>
-  (window as any).iframeResize({
-    license: 'GPLv3',
-    log: 'collapsed',
-  }, '#ata' )
+    const resize = () => (window as any).iframeResize({
+        license: 'GPLv3',
+        log: 'collapsed',
+    }, '#ata');
+    // possible fix for astro view transitions now causing the resize to trigger
+    document.addEventListener('astro:page-load', resize);
+    resize();
 </script>
 
 <style>
