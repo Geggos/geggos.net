@@ -21,13 +21,18 @@
     // TAKEN FROM BUH.MOE
     // client side lanyard api fetch
     const UID = "252214475011260418";
-    const avatarElement = document.getElementById('profile-avatar');
-    const nameElement = document.getElementById('profile-name');
-    const usernameElement = document.getElementById('profile-username');
-    const statusIndicator = document.getElementById('status-indicator');
-    const statusText = document.getElementById('status-text');
 
     async function fetchLanyardData() {
+        const avatarElement = document.getElementById('profile-avatar');
+        const nameElement = document.getElementById('profile-name');
+        const usernameElement = document.getElementById('profile-username');
+        const statusIndicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+
+        if (!avatarElement || !nameElement || !usernameElement || !statusIndicator || !statusText) {
+            return;
+        }
+
         try {
             const response = await fetch(`https://api.lanyard.rest/v1/users/${UID}`);
             if (response.ok) {
@@ -46,7 +51,7 @@
                         nameElement.textContent = global_name || 'Geggos';
                     }
                     if (usernameElement) {
-                        usernameElement.textContent = "@"+username || '@geggos';
+                        usernameElement.textContent = `@${username || 'geggos'}`;
                     }
                     
                     if (statusIndicator && statusText) {
@@ -64,6 +69,7 @@
     }
 
     fetchLanyardData();
+    document.addEventListener('astro:page-load', fetchLanyardData);
 </script>
 
 <style>
