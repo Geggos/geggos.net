@@ -57,7 +57,7 @@
                     if (statusIndicator && statusText) {
                         statusIndicator.setAttribute('data-status', lanyard.discord_status);
                         let text = lanyard.discord_status.charAt(0).toUpperCase() + lanyard.discord_status.slice(1);
-                        if (text = "Dnd") text = "Do not disturb";
+                        if (text == "Dnd") text = "Do not disturb";
                         statusText.textContent = text;
                     }
                 }
