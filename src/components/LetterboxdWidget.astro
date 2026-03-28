@@ -1,8 +1,8 @@
 ---
 export const prerender = false;
 
-import { Icon } from 'astro-icon/components';
-import FormattedDate from './FormattedDate.astro';
+import { Icon } from "astro-icon/components";
+import FormattedDate from "./FormattedDate.astro";
 
 interface Movie {
     entryTitle: string;
@@ -20,84 +20,86 @@ interface Movie {
     posterUrl?: string;
 }
 
-const extract = (text: string, tag: string) => text.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`))?.[1]?.trim();
-const stripHtml = (html: string) =>
-    html
-        .replace(/<!\[CDATA\[|\]\]>/g, '')
-        .replace(/<[^>]*>/g, '')
-        .trim();
-const extractPosterUrl = (description: string) =>
-    description.match(/<img[^>]+src="([^"]+)"/i)?.[1];
-
 let movie: Movie | null = null;
 
 try {
-    const text = await fetch('https://letterboxd.com/Geggos/rss/').then(r => r.text());
-    const item = text.match(/<item>([\s\S]*?)<\/item>/)?.[1];
-    
-    if (item && extract(item, 'title')) {
-        const description = extract(item, 'description') || '';
-        movie = {
-            entryTitle: extract(item, 'title')!,
-            entryUrl: extract(item, 'link') || '#',
-            publishedAt: extract(item, 'pubDate') || '',
-            watchedDate: extract(item, 'letterboxd:watchedDate'),
-            //isRewatch: extract(item, 'letterboxd:rewatch') === 'Yes',
-            isRewatch: true,
-            filmTitle: extract(item, 'letterboxd:filmTitle'),
-            filmYear: extract(item, 'letterboxd:filmYear'),
-            //memberRating: extract(item, 'letterboxd:memberRating'),
-            memberRating: "4.5",
-            memberLike: extract(item, 'letterboxd:memberLike'),
-            tmdbMovieId: extract(item, 'tmdb:movieId'),
-            author: extract(item, 'dc:creator'),
-            descriptionText: stripHtml(description),
-            posterUrl: extractPosterUrl(description) || extract(item, 'letterboxd:image')
-        };
+    const url = new URL("/api/letterboxd", Astro.url.origin);
+    const res = await fetch(url.toString());
+    const data = await res.json();
+    if (res.ok && data && !data.error) {
+        movie = data;
     }
 } catch (error) {
-    console.error('Failed to fetch Letterboxd feed:', error);
+    console.error("couldnt fetch letterboxd:", error);
 }
 ---
 
 <div class="letterboxd-widget">
-    <div class="text-xl text-center self-center lxd-header fancy">Latest movie</div>
-    {movie ? (
-        <div class="movie-entry shadow-md">
-            {movie.posterUrl && <img src={movie.posterUrl} alt={movie.filmTitle || movie.entryTitle} class="movie-icon shadow-md" />}
-            <div class="movie-info flex flex-col gap-2 text-left">
-                <a href={movie.entryUrl} target="_blank" class="movie-header flex flex-row gap-2">
-                    <div class="font-semibold accent highlight-link">{movie.filmTitle} ({movie.filmYear})</div>
-                </a>
-                
-
-
-                <div id="movie-watched" class="flex flex-row gap-2">
-                    <span class="accent-secondary font-semibold">Date: </span>
-                    <div class="block text-sm font-semibold">
-                        <Icon name="fa6-solid:calendar" />
-                        {movie.watchedDate ? <FormattedDate date={new Date(`${movie.watchedDate}T00:00:00`)} /> : 'idk'}
-                    </div>
-                    {movie.isRewatch && <div class="block text-sm font-semibold">
-                        <Icon name="fa6-solid:rotate-left" />
-                        <span>Rewatch</span>
-                        </div>}
-                </div>
-                {movie.memberRating &&
-                    <div class="movie-rating flex flex-row gap-2">
-                        <span class="accent-secondary font-semibold">Rating:</span>
-                        <div class="block text-sm font-semibold">
-                            <Icon name="fa6-solid:star" />
-                            {movie.memberRating}
+    <div class="text-xl text-center self-center lxd-header fancy">
+        Latest movie
+    </div>
+    {
+        movie ? (
+            <div class="movie-entry shadow-md">
+                {movie.posterUrl && (
+                    <img
+                        src={movie.posterUrl}
+                        alt={movie.filmTitle || movie.entryTitle}
+                        class="movie-icon shadow-md"
+                    />
+                )}
+                <div class="movie-info flex flex-col gap-2 text-left">
+                    <a
+                        href={movie.entryUrl}
+                        target="_blank"
+                        class="movie-header flex flex-row gap-2"
+                    >
+                        <div class="font-semibold accent highlight-link">
+                            {movie.filmTitle} ({movie.filmYear})
                         </div>
+                    </a>
+                    <div id="movie-watched" class="flex flex-row gap-2">
+                        <span class="accent-secondary font-semibold">
+                            Date:{" "}
+                        </span>
+                        <div class="block text-sm font-semibold">
+                            <Icon name="fa6-solid:calendar" />
+                            {movie.watchedDate ? (
+                                <FormattedDate
+                                    date={
+                                        new Date(
+                                            `${movie.watchedDate}T00:00:00`,
+                                        )
+                                    }
+                                />
+                            ) : (
+                                "idk"
+                            )}
+                        </div>
+                        {movie.isRewatch && (
+                            <div class="block text-sm font-semibold">
+                                <Icon name="fa6-solid:rotate-left" />
+                                <span>Rewatch</span>
+                            </div>
+                        )}
                     </div>
-                    }
-
+                    {movie.memberRating && (
+                        <div class="movie-rating flex flex-row gap-2">
+                            <span class="accent-secondary font-semibold">
+                                Rating:
+                            </span>
+                            <div class="block text-sm font-semibold">
+                                <Icon name="fa6-solid:star" />
+                                {movie.memberRating}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
-    ) : (
-        <div>Failed to load</div>
-    )}
+        ) : (
+            <div>Failed to load</div>
+        )
+    }
 </div>
 
 <style>
@@ -148,5 +150,4 @@ try {
             transform: none !important;
         }
     }
-    
 </style>
