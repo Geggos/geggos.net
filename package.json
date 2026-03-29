@@ -9,9 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.1.4",
     "@astrojs/mdx": "^5.0.0",
     "@astrojs/rss": "^4.0.17",
     "@astrojs/sitemap": "^3.7.1",
@@ -21,6 +23,7 @@
     "astro-icon": "^1.1.5",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.2.1",
-    "twemoji": "^14.0.2"
+    "twemoji": "^14.0.2",
+    "wrangler": "^4.78.0"
   }
 }
