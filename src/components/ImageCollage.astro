@@ -80,36 +80,6 @@ if (hasManualColumns) {
 const target = openInNewTab ? "_blank" : undefined;
 const rel = openInNewTab ? "noreferrer" : undefined;
 const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`;
-
-const renderItem = (image: CollageImage, index: number) => {
-    const href = image.href || (linkToSource ? image.src.src : undefined);
-
-    if (href) {
-        return (
-            <a
-                class="collage-item"
-                href={href}
-                target={target}
-                rel={rel}
-                data-lightbox-trigger={lightboxId}
-                data-lightbox-index={index}
-            >
-                <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
-            </a>
-        );
-    }
-
-    return (
-        <div
-            class="collage-item"
-            data-lightbox-trigger={lightboxId}
-            data-lightbox-index={index}
-            style="cursor: pointer;"
-        >
-            <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
-        </div>
-    );
-};
 ---
 
 <div class={`image-collage ${hasManualColumns ? "image-collage--manual" : ""}`} style={`--collage-columns: ${effectiveColumnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth}; --collage-max-height: ${resolvedMaxImageHeight}; --collage-mobile-max-height: ${resolvedMobileMaxImageHeight};`}>
@@ -118,11 +88,67 @@ const renderItem = (image: CollageImage, index: number) => {
             ? indexedColumns.map((column) => (
                 <div class="collage-column">
                     {
-                        column.map(({ image, index }) => renderItem(image, index))
+                        column.map(({ image, index }) => {
+                            const href = image.href || (linkToSource ? image.src.src : undefined);
+
+                            if (href) {
+                                return (
+                                    <a
+                                        class="collage-item"
+                                        href={href}
+                                        target={target}
+                                        rel={rel}
+                                        data-lightbox-trigger={lightboxId}
+                                        data-lightbox-index={index}
+                                    >
+                                        <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+                                    </a>
+                                );
+                            }
+
+                            return (
+                                <div
+                                    class="collage-item"
+                                    data-lightbox-trigger={lightboxId}
+                                    data-lightbox-index={index}
+                                    style="cursor: pointer;"
+                                >
+                                    <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+                                </div>
+                            );
+                        })
                     }
                 </div>
             ))
-            : images.map((image, index) => renderItem(image, index))
+            : images.map((image, index) => {
+                const href = image.href || (linkToSource ? image.src.src : undefined);
+
+                if (href) {
+                    return (
+                        <a
+                            class="collage-item"
+                            href={href}
+                            target={target}
+                            rel={rel}
+                            data-lightbox-trigger={lightboxId}
+                            data-lightbox-index={index}
+                        >
+                            <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+                        </a>
+                    );
+                }
+
+                return (
+                    <div
+                        class="collage-item"
+                        data-lightbox-trigger={lightboxId}
+                        data-lightbox-index={index}
+                        style="cursor: pointer;"
+                    >
+                        <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+                    </div>
+                );
+            })
     }
 </div>
 
