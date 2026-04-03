@@ -86,38 +86,49 @@ const lightboxId = `grid-lightbox-${Math.random().toString(36).substr(2, 9)}`;
 
 <style>
     .image-grid {
-        display: grid;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-        gap: 1rem;
+        --grid-columns: 1;
+        --grid-gap: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--grid-gap);
+        justify-content: center;
+        width: min(
+            100%,
+            calc(var(--image-max-width) * var(--grid-columns) + (var(--grid-columns) - 1) * var(--grid-gap))
+        );
+        margin-inline: auto;
     }
 
     @media (min-width: 768px) {
         .image-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            --grid-columns: 2;
         }
     }
 
     @media (min-width: 1024px) {
         .image-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-    }
-
-    @media (max-width: 768px) {
-        .image-grid-item {
-            width: min(100%, min(320px, var(--image-max-width)));
-            justify-self: center;
+            --grid-columns: 3;
         }
     }
 
     .image-grid-item {
         display: block;
-        width: min(100%, var(--image-max-width));
+        flex: 0 0 calc((100% - (var(--grid-columns) - 1) * var(--grid-gap)) / var(--grid-columns));
+        max-width: calc((100% - (var(--grid-columns) - 1) * var(--grid-gap)) / var(--grid-columns));
+        width: 100%;
+        box-sizing: border-box;
         border-radius: 16px;
         overflow: hidden;
         border: var(--image-outline);
         transition: transform 100ms ease-out;
-        justify-self: center;
+    }
+
+    @media (max-width: 768px) {
+        .image-grid-item {
+            flex-basis: min(100%, min(320px, var(--image-max-width)));
+            max-width: min(100%, min(320px, var(--image-max-width)));
+            width: min(100%, min(320px, var(--image-max-width)));
+        }
     }
 
     @media (hover: hover) {

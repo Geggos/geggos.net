@@ -18,6 +18,7 @@ interface Props {
     gap?: string | number;
     outline?: boolean;
     maxImageWidth?: string | number;
+    maxImageHeight?: string | number;
 }
 
 const {
@@ -28,6 +29,7 @@ const {
     gap = "1rem",
     outline = true,
     maxImageWidth,
+    maxImageHeight,
 } = Astro.props;
 
 const normalizeSize = (value: string | number | undefined, fallback: string) => {
@@ -42,6 +44,7 @@ const normalizeGap = (value: string | number) => {
 };
 
 const resolvedGap = normalizeGap(gap);
+const resolvedMaxImageHeight = normalizeSize(maxImageHeight, "none");
 const collageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
 
 const extractNumericValue = (str: string): number => {
@@ -65,7 +68,7 @@ const rel = openInNewTab ? "noreferrer" : undefined;
 const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div class="image-collage" style={`--collage-columns: ${columnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth};`}>
+<div class="image-collage" style={`--collage-columns: ${columnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth}; --collage-max-height: ${resolvedMaxImageHeight};`}>
     {
         images.map((image, index) => {
             const href = image.href || (linkToSource ? image.src.src : undefined);
@@ -132,9 +135,10 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
 
     .collage-img {
         width: 100%;
+        max-height: var(--collage-max-height);
         height: auto;
         display: block;
-        object-fit: cover;
+        object-fit: contain;
     }
 </style>
 

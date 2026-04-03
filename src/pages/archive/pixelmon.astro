@@ -59,15 +59,16 @@ import icon_2024_geggos from "../../assets/artwork/cobblemon/2024/icons/Trainer 
 import icon_2024_nasa from "../../assets/artwork/cobblemon/2024/icons/Trainer Nasa.png";
 
 const artworkGrid = [
+    { src: img_2025_marlo, alt: "" },
     { src: img_2025_bag, alt: "" },
+    { src: img_2024_icon, alt: "" },
+
     { src: img_2025_banner_1, alt: "" },
     { src: img_2025_cobble_icon, alt: "" },
-    { src: img_2025_marlo, alt: "" },
-    { src: img_2025_news, alt: "" },
     { src: img_2025_rsw572, alt: "" },
+
     { src: img_2025_rsw740, alt: "" },
-    { src: img_2024_results, alt: "" },
-    { src: img_2024_icon, alt: "" },
+    { src: img_2025_news, alt: "" },
     { src: img_2024_poster, alt: "" },
 ];
 
@@ -86,35 +87,37 @@ const screenshots = [
 
 const icons2025 = [
     { src: icon_2025_mason, alt: "" },
-    { src: icon_2025_charlie, alt: "" },
-    { src: icon_2025_chef, alt: "" },
-    { src: icon_2025_eli, alt: "" },
-    { src: icon_2025_geggos, alt: "" },
-    { src: icon_2025_kiri, alt: "" },
-    { src: icon_2025_lehgo, alt: "" },
-    { src: icon_2025_nasa, alt: "" },
-    { src: icon_2025_pink, alt: "" },
     { src: icon_2025_plasma, alt: "" },
-    { src: icon_2025_pobiii, alt: "" },
-    { src: icon_2025_rhi, alt: "" },
-    { src: icon_2025_skully, alt: "" },
-    { src: icon_2025_sync, alt: "" },
-    { src: icon_2025_tori, alt: "" },
+    { src: icon_2025_kiri, alt: "" },
     { src: icon_2025_yehn, alt: "" },
+    { src: icon_2025_chef, alt: "" },
+    { src: icon_2025_rhi, alt: "" },
+    { src: icon_2025_tori, alt: "" },
+    { src: icon_2025_geggos, alt: "" },
+    { src: icon_2025_lehgo, alt: "" },
+    { src: icon_2025_pink, alt: "" },
+    { src: icon_2025_charlie, alt: "" },
+    { src: icon_2025_pobiii, alt: "" },
+    { src: icon_2025_skully, alt: "" },
+    { src: icon_2025_nasa, alt: "" },
+    { src: icon_2025_sync, alt: "" },
+    { src: icon_2025_eli, alt: "" },
 ];
 
 const icons2024 = [
-    { src: icon_2024_eli, alt: "" },
-    { src: icon_2024_skully, alt: "" },
-    { src: icon_2024_lehgoify, alt: "" },
-    { src: icon_2024_chef, alt: "" },
-    { src: icon_2024_kiri, alt: "" },
+
     { src: icon_2024_mason, alt: "" },
     { src: icon_2024_plasma, alt: "" },
-    { src: icon_2024_charlie, alt: "" },
+    { src: icon_2024_kiri, alt: "" },
     { src: icon_2024_pink, alt: "" },
     { src: icon_2024_geggos, alt: "" },
+    { src: icon_2024_lehgoify, alt: "" },
+    { src: icon_2024_chef, alt: "" },
     { src: icon_2024_nasa, alt: "" },
+    { src: icon_2024_eli, alt: "" },
+    { src: icon_2024_charlie, alt: "" },
+    { src: icon_2024_skully, alt: "" },
+
 ];
 ---
 
@@ -127,23 +130,23 @@ const icons2024 = [
         <section class="mt-4 flex flex-col gap-2">
             <h2 class="font-cute text-2xl accent-secondary font-semibold">Banners, Posters and More!</h2>
             <section class="self-center">
-                <ImageCollage images={artworkGrid} columnCount={3} gap="1rem" outline={false} maxImageWidth={250} />
+                <ImageCollage images={artworkGrid} columnCount={3} gap="1rem" outline={false} maxImageWidth={300} maxImageHeight={400} />
             </section>
+        </section>
+
+        <section class="mt-6 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">Cobblemon 2025 Icons</h2>
+            <ImageGrid images={icons2025} aspectRatio="1 / 1" maxImageHeight="250" maxImageWidth="250" outline={false} />
+        </section>
+
+        <section class="mt-6 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">Pixelmon 2024 Icons</h2>
+            <ImageGrid images={icons2024} aspectRatio="1 / 1" maxImageHeight="200" maxImageWidth="200" outline={false} />
         </section>
 
         <section class="mt-6 flex flex-col gap-2">
             <h2 class="font-cute text-2xl accent-secondary font-semibold">Screenshots</h2>
             <ImageCarousel images={screenshots} />
-        </section>
-
-        <section class="mt-6 flex flex-col gap-2">
-            <h2 class="font-cute text-2xl accent-secondary font-semibold">2025 Icons</h2>
-            <ImageGrid images={icons2025} aspectRatio="1 / 1" maxImageHeight="250" maxImageWidth="250" outline={false} />
-        </section>
-
-        <section class="mt-6 flex flex-col gap-2">
-            <h2 class="font-cute text-2xl accent-secondary font-semibold">2024 Icons</h2>
-            <ImageGrid images={icons2024} aspectRatio="1 / 1" maxImageHeight="250" maxImageWidth="250" outline={false} />
         </section>
     </div>
 </Main>
