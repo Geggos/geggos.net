@@ -1,22 +1,53 @@
 ---
 import Main from "../../layouts/Main.astro";
+import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
-import buh from "../../assets/wip.png";
+import BlogEntry from "../../components/BlogEntry.astro";
 import h_blog from "../../assets/headers/blog.png"
+
+const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 ---
 
 <Main>
     <div class="my-8 text-center flex flex-col">
         <Image src={h_blog} alt="Blog" class="custom-header" height={250} />
         <hr />
-        <span class="my-8 text-xl">Thoughts, rants and gossip all from the mind of a Geggos.</span>
-        <Image
-            src={buh}
-            width={300}
-            height={300}
-            alt="the buh is working very hard."
-            class="self-center"
-        />
-        <span>buh is still working on this...</span>
+        <span class="my-8 font-cute text-xl">Thoughts, rants and gossip all from the mind of a Geggos.</span>
+        {
+            posts.length > 0 ? (
+                <div class="flex flex-col gap-4">
+                    {posts.map((post) => (
+                        <BlogEntry
+                            slug={post.id}
+                            title={post.data.title}
+                            description={post.data.description}
+                            pubDate={post.data.pubDate}
+                            updatedDate={post.data.updatedDate}
+                            heroImage={post.data.heroImage}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <div class="empty-state self-center shadow-md">
+                    <span class="text-2xl fancy accent-secondary">No blog posts yet!</span>
+                </div>
+            )
+        }
     </div>
 </Main>
+
+<style>
+    .empty-state {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 16px;
+        padding: 1rem 1.25rem;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        max-width: 28rem;
+    }
+</style>

@@ -1,0 +1,141 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+const latestPost = (await getCollection("blog"))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+---
+
+<div class="blog-widget">
+    <div class="text-xl text-center self-center blog-header fancy">
+        Latest Blog Post
+    </div>
+    {
+        latestPost ? (
+            <a href={`/blog/${latestPost.id}/`} class="blog-entry-link">
+                <div class="blog-entry shadow-md">
+                    <div class="blog-info flex flex-col gap-2 text-left">
+                        <div class="blog-title font-semibold accent">
+                            {latestPost.data.title}
+                        </div>
+                        <div class="block text-sm font-semibold">
+                            <Icon name="fa6-solid:calendar" />
+                            {latestPost.data.pubDate.toLocaleDateString("en-us", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                            })}
+                        </div>
+                        <div>{latestPost.data.description}</div>
+                    </div>
+                    {
+                        latestPost.data.heroImage && (
+                            <Image
+                                src={latestPost.data.heroImage}
+                                alt=""
+                                class="blog-thumbnail"
+                            />
+                        )
+                    }
+                </div>
+            </a>
+        ) : (
+            <div class="empty-state shadow-md">No blog posts yet!</div>
+        )
+    }
+</div>
+
+<style>
+    .blog-entry {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .blog-entry {
+            grid-template-columns: 3fr 2fr;
+            min-height: 240px;
+        }
+    }
+
+    .blog-entry-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .blog-thumbnail {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        min-height: 0;
+        object-fit: cover;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        mask-image: linear-gradient(to bottom, transparent 0%, white 40%);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            white 40%
+        );
+    }
+
+    @media (min-width: 768px) {
+        .blog-thumbnail {
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            mask-image: linear-gradient(to right, transparent 0%, white 40%);
+            -webkit-mask-image: linear-gradient(
+                to right,
+                transparent 0%,
+                white 40%
+            );
+        }
+    }
+
+    .blog-info {
+        min-width: 0;
+        padding: 1em;
+        align-self: center;
+    }
+
+    .blog-title {
+        font-size: 1.4rem;
+    }
+
+    .blog-widget {
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        will-change: transform;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    .blog-header {
+        color: var(--accent);
+    }
+
+    .empty-state {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 16px;
+        padding: 1rem 1.25rem;
+        background-color: white;
+        text-align: center;
+    }
+
+    @media (hover: hover) {
+        .blog-header.fancy:hover:not(:active) {
+            transform: rotate(-1deg);
+        }
+    }
+</style>

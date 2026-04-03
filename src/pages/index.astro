@@ -8,6 +8,7 @@ import LetterboxdWidget from "../components/LetterboxdWidget.astro";
 import DiscordWidget from "../components/DiscordWidget.astro";
 import TimeWidget from "../components/TimeWidget.astro";
 import ProjectWidget from "../components/ProjectWidget.astro";
+import BlogWidget from "../components/BlogWidget.astro";
 
 ---
 <Main>
@@ -35,6 +36,9 @@ import ProjectWidget from "../components/ProjectWidget.astro";
             </div>
             <div class="project-widget">
                 <ProjectWidget />
+            </div>
+            <div class="blog-widget">
+                <BlogWidget />
             </div>
         </div>
     </div>
@@ -93,7 +97,8 @@ import ProjectWidget from "../components/ProjectWidget.astro";
 
         .time-widget,
         .project-widget,
-        .letterboxd-widget {
+        .letterboxd-widget,
+        .blog-widget {
             height: 100%;
             display: flex;
         }
@@ -111,6 +116,12 @@ import ProjectWidget from "../components/ProjectWidget.astro";
         .letterboxd-widget {
             grid-column: 1;
             grid-row: 2 / 3;
+        }
+
+        .index-content > .blog-widget {
+            grid-column: span 2;
+            width: 100%;
+            align-self: stretch;
         }
     }
 
