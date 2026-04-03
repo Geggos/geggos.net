@@ -40,7 +40,7 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ### Output
 
-![blog placeholder](../../assets/blog/blog-placeholder-about.jpg)
+![blog placeholder](src/assets/blog/blog-placeholder-about.jpg)
 
 ## Blockquotes
 
@@ -116,6 +116,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
   </body>
 </html>
 ```
+
 ```
 
 ### Output
