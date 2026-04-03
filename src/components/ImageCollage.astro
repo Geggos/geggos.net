@@ -131,6 +131,17 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
         margin-bottom: var(--collage-gap);
         break-inside: avoid;
         width: 100%;
+        transition: transform 100ms ease-out;
+    }
+
+    @media (hover: hover) {
+        .collage-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .collage-item:active {
+            transform: scale(0.98) translateY(-4px);
+        }
     }
 
     .collage-img {
