@@ -1,0 +1,102 @@
+---
+import Main from "../../layouts/Main.astro";
+import ImageGrid from "../../components/ImageGrid.astro";
+import ImageSingle from "../../components/ImageSingle.astro";
+
+import christmas2025Group from "../../assets/artwork/christmas/2025group.png";
+
+import christmas2024Skating from "../../assets/artwork/christmas/2024/2skating.png";
+import christmas2024Asking from "../../assets/artwork/christmas/2024/asking.png";
+import christmas2024Baking from "../../assets/artwork/christmas/2024/baking.png";
+import christmas2024Christmas from "../../assets/artwork/christmas/2024/christmas.png";
+import christmas2024Cookies from "../../assets/artwork/christmas/2024/cookies.png";
+import christmas2024Decorating from "../../assets/artwork/christmas/2024/decorating.png";
+import christmas2024Delivering from "../../assets/artwork/christmas/2024/delivering.png";
+import christmas2024Giving from "../../assets/artwork/christmas/2024/giving.png";
+import christmas2024Roasting from "../../assets/artwork/christmas/2024/roasting.png";
+import christmas2024Snowball from "../../assets/artwork/christmas/2024/snowball.png";
+import christmas2024Snowman from "../../assets/artwork/christmas/2024/snowman.png";
+import christmas2024Watching from "../../assets/artwork/christmas/2024/watching.png";
+
+import christmas2025ChristmasSpirit from "../../assets/artwork/christmas/2025/Christmas Spirit.png";
+import christmas2025Conductor from "../../assets/artwork/christmas/2025/Conductor.png";
+import christmas2025Frosty from "../../assets/artwork/christmas/2025/Frosty.png";
+import christmas2025Krampus from "../../assets/artwork/christmas/2025/Krampus.png";
+import christmas2025LumberjackElf from "../../assets/artwork/christmas/2025/Lumberjack Elf.png";
+import christmas2025MrsClaus from "../../assets/artwork/christmas/2025/Mrs Claus.png";
+import christmas2025Nutcracker from "../../assets/artwork/christmas/2025/Nutcracker.png";
+import christmas2025SaintNick from "../../assets/artwork/christmas/2025/Saint Nick.png";
+import christmas2025SantaClaus from "../../assets/artwork/christmas/2025/Santa Claus.png";
+import christmas2025SnowQueen from "../../assets/artwork/christmas/2025/Snow Queen.png";
+import christmas2025TheGrinch from "../../assets/artwork/christmas/2025/The Grinch.png";
+import christmas2025ToyElf from "../../assets/artwork/christmas/2025/Toy Elf.png";
+
+const images2024 = [
+	{ src: christmas2024Asking, alt: "" },
+	{ src: christmas2024Christmas, alt: "" },
+	{ src: christmas2024Watching, alt: "" },
+
+	{ src: christmas2024Snowman, alt: "" },
+	{ src: christmas2024Decorating, alt: "" },
+	{ src: christmas2024Snowball, alt: "" },
+
+
+	{ src: christmas2024Cookies, alt: "" },
+	{ src: christmas2024Roasting, alt: "" },
+	{ src: christmas2024Delivering, alt: "" },
+
+    { src: christmas2024Baking, alt: "" },
+	{ src: christmas2024Giving, alt: "" },
+	{ src: christmas2024Skating, alt: "" },
+
+];
+
+const images2025 = [
+	{ src: christmas2025SaintNick, alt: "" },
+	{ src: christmas2025MrsClaus, alt: "" },
+	{ src: christmas2025SantaClaus, alt: "" },
+	{ src: christmas2025Frosty, alt: "" },
+	{ src: christmas2025Nutcracker, alt: "" },
+	{ src: christmas2025Krampus, alt: "" },
+	{ src: christmas2025SnowQueen, alt: "" },
+	{ src: christmas2025Conductor, alt: "" },
+	{ src: christmas2025LumberjackElf, alt: "" },
+	{ src: christmas2025ChristmasSpirit, alt: "" },
+	{ src: christmas2025ToyElf, alt: "" },
+    { src: christmas2025TheGrinch, alt: "" },
+];
+---
+
+<Main>
+	<div class="my-8 text-center flex flex-col gap-4">
+		<a href="/gallery" class="fancy text-lg self-center">← Back</a>
+		<h1>Christmas</h1>
+		<hr>
+
+		<section class="mt-4 flex flex-col gap-2">
+			<h2 class="font-cute text-2xl accent-secondary font-semibold">2025 Christmas Cards</h2>
+			<ImageGrid
+				images={images2025}
+				maxImageHeight="250"
+				outline={false}
+                objectFit="contain"
+                rounded={false}
+			/>
+		</section>
+
+		<section>
+			<ImageSingle src={christmas2025Group} alt="" rounded={false} />
+		</section>
+
+		<section class="mt-4 flex flex-col gap-2">
+			<h2 class="font-cute text-2xl accent-secondary font-semibold">2024 Christmas Cards</h2>
+			<ImageGrid
+				images={images2024}
+				maxImageHeight="250"
+				outline={false}
+                objectFit="cover"
+                rounded={true}
+			/>
+		</section>
+	</div>
+</Main>

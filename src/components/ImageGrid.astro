@@ -15,9 +15,11 @@ interface Props {
     linkToSource?: boolean;
     openInNewTab?: boolean;
     aspectRatio?: string;
+    objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down";
     maxImageWidth?: string | number;
     maxImageHeight?: string | number;
     outline?: boolean;
+    rounded?: boolean;
 }
 
 const {
@@ -25,9 +27,11 @@ const {
     linkToSource = false,
     openInNewTab = false,
     aspectRatio = "1 / 1",
+    objectFit = "auto",
     maxImageWidth,
     maxImageHeight,
     outline = true,
+    rounded = true,
 } = Astro.props;
 
 const normalizeSize = (value: string | number | undefined, fallback: string) => {
@@ -39,6 +43,7 @@ const normalizeSize = (value: string | number | undefined, fallback: string) => 
 const resolvedMaxImageWidth = normalizeSize(maxImageWidth, "100%");
 const resolvedMaxImageHeight = normalizeSize(maxImageHeight, "none");
 const imageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
+const imageRadius = rounded ? "16px" : "0";
 
 const target = openInNewTab ? "_blank" : undefined;
 const rel = openInNewTab ? "noreferrer" : undefined;
@@ -47,7 +52,7 @@ const lightboxId = `grid-lightbox-${Math.random().toString(36).substr(2, 9)}`;
 
 <div
     class="image-grid"
-    style={`--image-ratio: ${aspectRatio}; --image-max-width: ${resolvedMaxImageWidth}; --image-max-height: ${resolvedMaxImageHeight}; --image-outline: ${imageOutline};`}
+    style={`--image-ratio: ${aspectRatio}; --image-object-fit: ${objectFit}; --image-max-width: ${resolvedMaxImageWidth}; --image-max-height: ${resolvedMaxImageHeight}; --image-outline: ${imageOutline}; --image-radius: ${imageRadius};`}
 >
     {
         images.map((image, index) => {
@@ -117,7 +122,7 @@ const lightboxId = `grid-lightbox-${Math.random().toString(36).substr(2, 9)}`;
         max-width: calc((100% - (var(--grid-columns) - 1) * var(--grid-gap)) / var(--grid-columns));
         width: 100%;
         box-sizing: border-box;
-        border-radius: 16px;
+        border-radius: var(--image-radius);
         overflow: hidden;
         border: var(--image-outline);
         transition: transform 100ms ease-out;
@@ -145,7 +150,7 @@ const lightboxId = `grid-lightbox-${Math.random().toString(36).substr(2, 9)}`;
         width: 100%;
         aspect-ratio: var(--image-ratio);
         max-height: var(--image-max-height);
-        object-fit: cover;
+        object-fit: var(--image-object-fit);
     }
 </style>
 

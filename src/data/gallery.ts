@@ -4,7 +4,7 @@ import galleryMisc from "../assets/gallery-banners/geggobanner.png";
 import galleryChristmas from "../assets/gallery-banners/hohoohohoh.png";
 
 export interface Gallery {
-    href: string;
+    href?: string;
     image: ImageMetadata;
     label: string;
     alt: string;
@@ -20,14 +20,13 @@ export const galleries: Gallery[] = [
         classes: "object-right",
     },
     {
-        href: "/gallery/comics",
         image: galleryMisc,
         label: "Misc",
         alt: "A banner of Geggos and his friends",
         classes: "object-top",
     },
     {
-        href: "/gallery/comics",
+        href: "/gallery/christmas",
         image: galleryChristmas,
         label: "Christmas",
         alt: "Geggos dragging a santa sleigh with two friends in it",
