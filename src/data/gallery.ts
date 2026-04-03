@@ -20,6 +20,7 @@ export const galleries: Gallery[] = [
         classes: "object-right",
     },
     {
+        href: "/gallery/misc",
         image: galleryMisc,
         label: "Misc",
         alt: "A banner of Geggos and his friends",

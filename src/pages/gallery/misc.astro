@@ -1,0 +1,136 @@
+---
+import Main from "../../layouts/Main.astro";
+import ImageGrid from "../../components/ImageGrid.astro";
+import ImageCollage from "../../components/ImageCollage.astro";
+
+import miscCityscape from "../../assets/artwork/misc/(1) cityscape - by halfcharr.png";
+import miscHalloween2025 from "../../assets/artwork/misc/(2) halloween 2025 - by halfcharr.png";
+import miscJumpUp from "../../assets/artwork/misc/(3) Jump up - By Halfcharr.png";
+import miscFriends from "../../assets/artwork/misc/(4) friends - by cheffic.png";
+import miscDewey from "../../assets/artwork/misc/(5) dewey - by geggos.png";
+
+import geggosnetFirstBanner from "../../assets/artwork/misc/geggosnet/(1) First Banner - Halfcharr.png";
+import geggosnetWorkInProgress from "../../assets/artwork/misc/geggosnet/(2) Work in Progress - Halfcharr.png";
+import geggosnetBlogTitle from "../../assets/artwork/misc/geggosnet/(3) Blog - Halfcharr.png";
+import geggosnetArchiveTitle from "../../assets/artwork/misc/geggosnet/(4) Archive - Halfcharr.png";
+import geggosnetProjectsTitle from "../../assets/artwork/misc/geggosnet/(5) Projects - Halfcharr.png";
+import geggosnetGalleryTitle from "../../assets/artwork/misc/geggosnet/(6) Gallery - Halfcharr.png";
+import geggosnetGuestbookTitle from "../../assets/artwork/misc/geggosnet/(7) Guestbook - Halfcharr.png";
+import geggosnetGalleryButton from "../../assets/artwork/misc/geggosnet/(8) Gallery Button - Halfcharr.png";
+import geggosnetDndButton from "../../assets/artwork/misc/geggosnet/(9) D&D Button - Halfcharr.png";
+import geggosnetBlogButton from "../../assets/artwork/misc/geggosnet/(10) Blog Button - Halfcharr.png";
+import geggosnetMouroButton from "../../assets/artwork/misc/geggosnet/(11) Mouro Button - Halfcharr.png";
+import geggosnetPixelmonButton from "../../assets/artwork/misc/geggosnet/(12) Pixelmon Button - Halfcharr.png";
+import geggosnetFriendsButton from "../../assets/artwork/misc/geggosnet/(13) Friends Button - Halfcharr.png";
+import geggosnetMouroLander from "../../assets/artwork/misc/geggosnet/(14) Mouro Lander - Halfcharr.png";
+import geggosnetFavicon from "../../assets/artwork/misc/favicon.png";
+
+const miscImages = [
+    {
+        src: miscCityscape,
+        alt: "A picture of Geggos in a city used for my playlist, the reflection is full of references to friends - art by @halfcharr",
+    },
+    {
+        src: miscHalloween2025,
+        alt: "Halloween banner art used during October 2025, it features Geggos, Tori, Mason, Matthew, Lowe and Max. - art by @halfcharr",
+    },
+    {
+        src: miscJumpUp,
+        alt: "A picture of all my friends, jumping up in the air. based on the Intro of Ninjago. - art by @halfcharr",
+    },
+    {
+        src: miscFriends,
+        alt: "Me and my friend Lowe, running through a magical world. - art by @cheffic",
+    },
+    {
+        src: miscDewey,
+        alt: "My Original Character, Oddey Dewey. he is copyrighted to me and he is awesome. do not steal. - art by Geggos",
+    },
+];
+
+const geggosnetImages = [
+    {
+        src: geggosnetFirstBanner,
+        alt: "The first banner used on Geggos.net, featuring all Geggos most iconic outfits! - art by @halfcharr",
+    },
+    {
+        src: geggosnetWorkInProgress,
+        alt: "A work in progress image to use when parts of the website aren't ready to be shown. - art by @halfcharr",
+    },
+    {
+        src: geggosnetBlogTitle,
+        alt: "The title image for the Blog page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetArchiveTitle,
+        alt: "The title image for the Archive page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetProjectsTitle,
+        alt: "The title image for the Projects page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetGalleryTitle,
+        alt: "The title image for the Gallery page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetGuestbookTitle,
+        alt: "The title image for the Guestbook page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetGalleryButton,
+        alt: "A button used on the original Geggos.net that would take you to the Gallery. - art by @halfcharr",
+    },
+    {
+        src: geggosnetDndButton,
+        alt: "A button used on the original Geggos.net that would take you to the D&D page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetBlogButton,
+        alt: "A button used on the original Geggos.net that would take you to the Blog. - art by @halfcharr ",
+    },
+    {
+        src: geggosnetMouroButton,
+        alt: "A button used on the original Geggos.net that would take you to the Mouro page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetPixelmonButton,
+        alt: "A button used on the original Geggos.net that would take you to the Pixelmon Page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetFriendsButton,
+        alt: "A button used on the original Geggos.net that would take you to the Friends Page. - art by @halfcharr",
+    },
+    {
+        src: geggosnetFavicon,
+        alt: "The new Geggos.net favicon - art by @halfcharr",
+    },
+    {
+        src: geggosnetMouroLander,
+        alt: "The landing image for the Mouro section, originally this was meant to tease what the page might be, but I never got around to finishing it. - art by @halfcharr",
+    },
+];
+
+---
+
+<Main>
+    <div class="my-8 text-center flex flex-col gap-4">
+        <a href="/gallery" class="fancy text-lg self-center">← Back</a>
+        <h1>Misc</h1>
+        <section class="mt-4 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">Artwork</h2>
+            <hr>
+            <section class="self-center">
+                <ImageCollage images={miscImages} gap="1rem" outline={false} maxImageWidth={300} maxImageHeight={400} rounded={true} />
+            </section>
+        </section>
+
+        <section class="mt-8 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">Geggos.net Assets</h2>
+            <hr>
+            <section class="self-center">
+                <ImageGrid images={geggosnetImages} outline={false} maxImageWidth={260} maxImageHeight={220} objectFit="contain" />
+            </section>
+        </section>
+    </div>
+</Main>

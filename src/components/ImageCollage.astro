@@ -18,6 +18,7 @@ interface Props {
     columnCount?: number;
     gap?: string | number;
     outline?: boolean;
+    rounded?: boolean;
     maxImageWidth?: string | number;
     maxImageHeight?: string | number;
 }
@@ -30,6 +31,7 @@ const {
     columnCount = 3,
     gap = "1rem",
     outline = true,
+    rounded = false,
     maxImageWidth,
     maxImageHeight,
 } = Astro.props;
@@ -63,6 +65,7 @@ const halveSize = (value: string) => {
 
 const resolvedMobileMaxImageHeight = halveSize(resolvedMaxImageHeight);
 const collageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
+const collageRadius = rounded ? "16px" : "0";
 
 const collageMaxWidth = maxImageWidth
     ? `calc(${resolvedMaxImageWidth} * ${effectiveColumnCount} + ${resolvedGap} * ${effectiveColumnCount - 1})`
@@ -82,7 +85,7 @@ const rel = openInNewTab ? "noreferrer" : undefined;
 const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<div class={`image-collage ${hasManualColumns ? "image-collage--manual" : ""}`} style={`--collage-columns: ${effectiveColumnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth}; --collage-max-height: ${resolvedMaxImageHeight}; --collage-mobile-max-height: ${resolvedMobileMaxImageHeight};`}>
+<div class={`image-collage ${hasManualColumns ? "image-collage--manual" : ""}`} style={`--collage-columns: ${effectiveColumnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-radius: ${collageRadius}; --collage-max-width: ${collageMaxWidth}; --collage-max-height: ${resolvedMaxImageHeight}; --collage-mobile-max-height: ${resolvedMobileMaxImageHeight};`}>
     {
         hasManualColumns
             ? indexedColumns.map((column) => (
@@ -183,7 +186,7 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
             display: block;
         }
 
-        .collage-img {
+        :global(.collage-img) {
             max-height: var(--collage-mobile-max-height);
         }
     }
@@ -196,11 +199,11 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
 
     .collage-item {
         display: block;
-        overflow: hidden;
-        border: var(--collage-outline);
         margin-bottom: var(--collage-gap);
         break-inside: avoid;
-        width: 100%;
+        width: fit-content;
+        max-width: 100%;
+        margin-inline: auto;
         transition: transform 100ms ease-out;
     }
 
@@ -214,11 +217,15 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
         }
     }
 
-    .collage-img {
-        width: 100%;
+    :global(.collage-img) {
+        width: auto;
+        max-width: 100%;
         max-height: var(--collage-max-height);
         height: auto;
         display: block;
+        border-radius: var(--collage-radius);
+        border: var(--collage-outline);
+        box-sizing: border-box;
         object-fit: contain;
     }
 </style>

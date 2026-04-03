@@ -14,55 +14,53 @@ interface Props {
     images: CarouselImage[];
     linkToSource?: boolean;
     openInNewTab?: boolean;
-    aspectRatio?: string;
 }
 
 const {
     images,
     linkToSource = false,
     openInNewTab = false,
-    aspectRatio = "16 / 9",
 } = Astro.props;
 
 const target = openInNewTab ? "_blank" : undefined;
 const rel = openInNewTab ? "noreferrer" : undefined;
 const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}`;
+
+// i need to be fucking shot dude
 ---
 
-<div class="image-carousel" style={`--image-ratio: ${aspectRatio};`} tabindex="0" aria-label="Image carousel">
-    <div class="carousel-stage" data-carousel-stage>
-        {
-            images.map((image, index) => {
-                const href = image.href || (linkToSource ? image.src.src : undefined);
-                const isActive = index === 0;
+<div class="image-carousel" tabindex="0" aria-label="Image carousel">
+    {
+        images.map((image, index) => {
+            const href = image.href || (linkToSource ? image.src.src : undefined);
+            const isActive = index === 0;
 
-                if (href) {
-                    return (
-                        <a
-                            class={`carousel-slide ${isActive ? "is-active" : ""}`}
-                            href={href}
-                            target={target}
-                            rel={rel}
-                            data-carousel-slide
-                            data-slide-index={index}
-                            data-description={image.alt}
-                            data-lightbox-trigger={lightboxId}
-                            data-lightbox-index={index}
-                        >
-                            <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-img ${image.classes || ""}`} />
-                        </a>
-                    );
-                }
-
+            if (href) {
                 return (
-                    <div class={`carousel-slide ${isActive ? "is-active" : ""}`} data-carousel-slide data-slide-index={index} data-description={image.alt} data-lightbox-trigger={lightboxId} data-lightbox-index={index} style="cursor: pointer;">
+                    <a
+                        class={`carousel-slide shadow-lg ${isActive ? "is-active" : ""}`}
+                        href={href}
+                        target={target}
+                        rel={rel}
+                        data-carousel-slide
+                        data-slide-index={index}
+                        data-description={image.alt}
+                        data-lightbox-trigger={lightboxId}
+                        data-lightbox-index={index}
+                    >
                         <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-img ${image.classes || ""}`} />
-                    </div>
+                    </a>
                 );
-            })
-        }
-    </div>
-    <div class="carousel-description" data-carousel-description>
+            }
+
+            return (
+                <div class={`carousel-slide shadow-lg ${isActive ? "is-active" : ""}`} data-carousel-slide data-slide-index={index} data-description={image.alt} data-lightbox-trigger={lightboxId} data-lightbox-index={index} style="cursor: pointer;">
+                    <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-img ${image.classes || ""}`} />
+                </div>
+            );
+        })
+    }
+    <div class="carousel-description font-semibold accent-secondary" data-carousel-description>
         {images[0]?.alt && <p>{images[0].alt}</p>}
     </div>
     <div class="carousel-previews" data-carousel-previews>
@@ -75,7 +73,9 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
                     data-carousel-preview
                     data-preview-index={index}
                 >
-                    <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-preview-img ${image.classes || ""}`} />
+                    <div class="carousel-preview-box">
+                        <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-preview-img ${image.classes || ""}`} />
+                    </div>
                 </button>
             ))
         }
@@ -95,21 +95,14 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
         box-sizing: border-box;
     }
 
-    .carousel-stage {
-        position: relative;
-        width: 100%;
-        max-width: 100%;
-        height: min(70vh, 820px);
-        box-sizing: border-box;
-    }
-
     .carousel-slide {
         display: none;
         border-radius: 16px;
         overflow: hidden;
         border: 4px solid var(--bg-accent-transparent);
-        width: 100%;
-        height: 100%;
+        width: fit-content;
+        max-width: 100%;
+        margin-inline: auto;
         box-sizing: border-box;
     }
 
@@ -118,8 +111,11 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
     }
 
     .carousel-img {
-        width: 100%;
-        height: 100%;
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: min(70vh, 820px);
         object-fit: contain;
         background: white;
     }
@@ -153,10 +149,6 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
             margin-inline: auto;
         }
 
-        .carousel-stage {
-            height: min(46vh, 420px);
-        }
-
         .carousel-previews {
             grid-auto-columns: 86px;
             gap: 0.4rem;
@@ -181,35 +173,49 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
     }
 
     .carousel-preview {
-        border: 3px solid var(--bg-accent-transparent);
         border-radius: 12px;
-        overflow: hidden;
         padding: 0;
         background: white;
         cursor: pointer;
         opacity: 0.65;
-        transition: transform 80ms ease-out, opacity 80ms ease-out, border-color 80ms ease-out;
+        transition: opacity 80ms ease-out;
         scroll-snap-align: start;
+    }
+
+    .carousel-preview-box {
+        width: 100%;
+        aspect-ratio: 1 / 1;
     }
 
     .carousel-preview.is-active {
         opacity: 1;
-        border-color: var(--accent);
     }
 
     .carousel-preview-img {
         width: 100%;
-        aspect-ratio: 1 / 1;
+        height: 100%;
+        box-sizing: border-box;
+        border: 3px solid var(--bg-accent-transparent);
+        border-radius: 12px;
         object-fit: cover;
+        display: block;
+        transition: transform 80ms ease-out;
+    }
+
+    .carousel-preview.is-active .carousel-preview-img {
+        border-color: var(--accent);
     }
 
     @media (hover: hover) {
         .carousel-preview:hover {
             opacity: 1;
+        }
+
+        .carousel-preview:hover .carousel-preview-img {
             transform: translateY(-2px);
         }
 
-        .carousel-preview:active {
+        .carousel-preview:active .carousel-preview-img {
             transform: translateY(-2px) scale(0.98);
         }
     }
@@ -287,8 +293,22 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
         }
 
         function setActive(index) {
+            const previousHeight = carousel.getBoundingClientRect().height;
+
             activeIndex = wrapIndex(index, slides.length);
             render();
+
+            window.requestAnimationFrame(() => {
+                const nextHeight = carousel.getBoundingClientRect().height;
+                const delta = nextHeight - previousHeight;
+
+                if (delta !== 0) {
+                    window.scrollBy({
+                        top: delta,
+                        behavior: "smooth",
+                    });
+                }
+            });
         }
 
         previews.forEach((preview) => {
