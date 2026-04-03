@@ -12,6 +12,7 @@ interface CollageImage {
 
 interface Props {
     images: CollageImage[];
+    columns?: CollageImage[][];
     linkToSource?: boolean;
     openInNewTab?: boolean;
     columnCount?: number;
@@ -23,6 +24,7 @@ interface Props {
 
 const {
     images,
+    columns,
     linkToSource = false,
     openInNewTab = false,
     columnCount = 3,
@@ -31,6 +33,9 @@ const {
     maxImageWidth,
     maxImageHeight,
 } = Astro.props;
+
+const hasManualColumns = Array.isArray(columns) && columns.length > 0;
+const effectiveColumnCount = hasManualColumns ? columns.length : columnCount;
 
 const normalizeSize = (value: string | number | undefined, fallback: string) => {
     if (value === undefined || value === null || value === "") return fallback;
@@ -44,65 +49,84 @@ const normalizeGap = (value: string | number) => {
 };
 
 const resolvedGap = normalizeGap(gap);
+const resolvedMaxImageWidth = normalizeSize(maxImageWidth, "100%");
 const resolvedMaxImageHeight = normalizeSize(maxImageHeight, "none");
-const collageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
 
-const extractNumericValue = (str: string): number => {
-    const match = str.match(/[\d.]+/);
-    return match ? parseInt(match[0]) : 0;
+const halveSize = (value: string) => {
+    if (value === "none") return "none";
+    const match = value.match(/^(\d+(?:\.\d+)?)(px|rem|em|vh|vw|%)$/);
+    if (!match) return value;
+    const amount = parseFloat(match[1]);
+    const unit = match[2];
+    return `${amount / 2}${unit}`;
 };
 
-let collageMaxWidth = "100%";
-if (maxImageWidth) {
-    const resolvedImageWidth = normalizeSize(maxImageWidth, "100%");
-    const imageWidthNum = typeof resolvedImageWidth === "string" && resolvedImageWidth.endsWith("px") 
-        ? extractNumericValue(resolvedImageWidth) 
-        : 250;
-    const gapNum = extractNumericValue(resolvedGap);
-    const totalGapWidth = (columnCount - 1) * gapNum;
-    collageMaxWidth = `${imageWidthNum * columnCount + totalGapWidth}px`;
+const resolvedMobileMaxImageHeight = halveSize(resolvedMaxImageHeight);
+const collageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
+
+const collageMaxWidth = maxImageWidth
+    ? `calc(${resolvedMaxImageWidth} * ${effectiveColumnCount} + ${resolvedGap} * ${effectiveColumnCount - 1})`
+    : "100%";
+
+let lightboxImages = images;
+let indexedColumns: Array<Array<{ image: CollageImage; index: number }>> = [];
+
+if (hasManualColumns) {
+    let currentIndex = 0;
+    indexedColumns = columns.map((column) => column.map((image) => ({ image, index: currentIndex++ })));
+    lightboxImages = indexedColumns.flat().map((entry) => entry.image);
 }
 
 const target = openInNewTab ? "_blank" : undefined;
 const rel = openInNewTab ? "noreferrer" : undefined;
 const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`;
+
+const renderItem = (image: CollageImage, index: number) => {
+    const href = image.href || (linkToSource ? image.src.src : undefined);
+
+    if (href) {
+        return (
+            <a
+                class="collage-item"
+                href={href}
+                target={target}
+                rel={rel}
+                data-lightbox-trigger={lightboxId}
+                data-lightbox-index={index}
+            >
+                <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+            </a>
+        );
+    }
+
+    return (
+        <div
+            class="collage-item"
+            data-lightbox-trigger={lightboxId}
+            data-lightbox-index={index}
+            style="cursor: pointer;"
+        >
+            <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+        </div>
+    );
+};
 ---
 
-<div class="image-collage" style={`--collage-columns: ${columnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth}; --collage-max-height: ${resolvedMaxImageHeight};`}>
+<div class={`image-collage ${hasManualColumns ? "image-collage--manual" : ""}`} style={`--collage-columns: ${effectiveColumnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth}; --collage-max-height: ${resolvedMaxImageHeight}; --collage-mobile-max-height: ${resolvedMobileMaxImageHeight};`}>
     {
-        images.map((image, index) => {
-            const href = image.href || (linkToSource ? image.src.src : undefined);
-
-            if (href) {
-                return (
-                    <a
-                        class="collage-item"
-                        href={href}
-                        target={target}
-                        rel={rel}
-                        data-lightbox-trigger={lightboxId}
-                        data-lightbox-index={index}
-                    >
-                        <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
-                    </a>
-                );
-            }
-
-            return (
-                <div
-                    class="collage-item"
-                    data-lightbox-trigger={lightboxId}
-                    data-lightbox-index={index}
-                    style="cursor: pointer;"
-                >
-                    <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+        hasManualColumns
+            ? indexedColumns.map((column) => (
+                <div class="collage-column">
+                    {
+                        column.map(({ image, index }) => renderItem(image, index))
+                    }
                 </div>
-            );
-        })
+            ))
+            : images.map((image, index) => renderItem(image, index))
     }
 </div>
 
-<ImageLightbox images={images} lightboxId={lightboxId} />
+<ImageLightbox images={lightboxImages} lightboxId={lightboxId} />
 
 <style>
     .image-collage {
@@ -112,9 +136,29 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
         max-width: var(--collage-max-width);
     }
 
+    .image-collage--manual {
+        column-count: initial;
+        display: flex;
+        align-items: flex-start;
+        gap: var(--collage-gap);
+    }
+
+    .collage-column {
+        flex: 1;
+        min-width: 0;
+    }
+
     @media (max-width: 768px) {
         .image-collage {
             column-count: 1;
+        }
+
+        .image-collage--manual {
+            display: block;
+        }
+
+        .collage-img {
+            max-height: var(--collage-mobile-max-height);
         }
     }
 
@@ -188,6 +232,5 @@ const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`
         });
     };
 
-    document.addEventListener("DOMContentLoaded", initCollageLightbox);
-    document.addEventListener("astro:after-swap", initCollageLightbox);
+    document.addEventListener("astro:page-load", initCollageLightbox);
 </script>

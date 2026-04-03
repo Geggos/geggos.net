@@ -4,6 +4,7 @@ import ImageCarousel from "../../components/ImageCarousel.astro";
 import ImageGrid from "../../components/ImageGrid.astro";
 import ImageCollage from "../../components/ImageCollage.astro";
 
+import badge from "../../assets/artwork/cobblemon/badge_pokeball.png"
 // 2025 Images
 import img_2025_bag from "../../assets/artwork/cobblemon/2025/images/bag.png";
 import img_2025_banner_1 from "../../assets/artwork/cobblemon/2025/images/banner_1.png";
@@ -58,19 +59,27 @@ import icon_2024_pink from "../../assets/artwork/cobblemon/2024/icons/LOVENOTE P
 import icon_2024_geggos from "../../assets/artwork/cobblemon/2024/icons/Trainer Geggos.png";
 import icon_2024_nasa from "../../assets/artwork/cobblemon/2024/icons/Trainer Nasa.png";
 
-const artworkGrid = [
+const col1 = [
     { src: img_2025_marlo, alt: "" },
     { src: img_2025_bag, alt: "" },
     { src: img_2024_icon, alt: "" },
+];
 
+const col2 = [
     { src: img_2025_banner_1, alt: "" },
     { src: img_2025_cobble_icon, alt: "" },
     { src: img_2025_rsw572, alt: "" },
+    { src: badge, alt: "" },
+];
 
+const col3 = [
     { src: img_2025_rsw740, alt: "" },
     { src: img_2025_news, alt: "" },
     { src: img_2024_poster, alt: "" },
 ];
+
+const artworkColumns = [col1, col2, col3];
+const artworkGrid = artworkColumns.flat();
 
 const screenshots = [
     { src: ss_1, alt: "" },
@@ -130,7 +139,7 @@ const icons2024 = [
         <section class="mt-4 flex flex-col gap-2">
             <h2 class="font-cute text-2xl accent-secondary font-semibold">Banners, Posters and More!</h2>
             <section class="self-center">
-                <ImageCollage images={artworkGrid} columnCount={3} gap="1rem" outline={false} maxImageWidth={300} maxImageHeight={400} />
+                <ImageCollage images={artworkGrid} columns={artworkColumns} columnCount={3} gap="1rem" outline={false} maxImageWidth={300} maxImageHeight={400} />
             </section>
         </section>
 
