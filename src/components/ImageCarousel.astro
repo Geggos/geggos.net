@@ -271,9 +271,6 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
             previews.forEach((preview, previewIndex) => {
                 if (!(preview instanceof HTMLElement)) return;
                 preview.classList.toggle("is-active", previewIndex === activeIndex);
-                if (previewIndex === activeIndex) {
-                    preview.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
-                }
             });
 
             if (descriptionEl instanceof HTMLElement) {
@@ -307,9 +304,6 @@ const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}
             if (!(previewsContainer instanceof HTMLElement)) return;
             const fitsInView = previewsContainer.scrollWidth <= previewsContainer.clientWidth + 1;
             previewsContainer.classList.toggle("is-compact", fitsInView);
-            if (!fitsInView) {
-                previewsContainer.scrollLeft = 0;
-            }
         }
 
         slides.forEach((slide) => {
