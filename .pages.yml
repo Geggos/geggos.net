@@ -1,0 +1,46 @@
+media:
+  input: src/assets/artwork/blog
+  output: /src/assets/artwork/blog
+
+content:
+  - name: blog
+    label: Blog Posts
+    type: collection
+    path: src/content/blog
+    view:
+      fields: [title, pubDate, updatedDate]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+
+      - name: description
+        label: Description
+        type: text
+        required: true
+
+      - name: pubDate
+        label: Published Date
+        type: date
+        required: true
+
+      - name: updatedDate
+        label: Updated Date
+        type: date
+        required: false
+
+      - name: heroImage
+        label: Banner Image
+        type: image
+        required: false
+        options:
+          media: default
+          path: src/assets/artwork/blog
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe
+
+      - name: body
+        label: Content
+        type: rich-text
+        required: true
