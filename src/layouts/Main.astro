@@ -27,16 +27,21 @@ const {
     </body>
 </html>
 
-<script>
-	import twemoji from 'twemoji';
+<script is:inline src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js"></script>
+<script is:inline>
+    const parseTwemoji = () => {
+        if (!window.twemoji) return;
+        window.twemoji.parse(document.body, {
+            folder: 'svg',
+            ext: '.svg'
+        });
+    };
 
-	const parseTwemoji = () => {
-		twemoji.parse(document.body, {
-			folder: 'svg',
-			ext: '.svg'
-		});
-	};
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', parseTwemoji, { once: true });
+    } else {
+        parseTwemoji();
+    }
 
-	document.addEventListener('DOMContentLoaded', parseTwemoji);
-	document.addEventListener('astro:after-swap', parseTwemoji);
+    document.addEventListener('astro:after-swap', parseTwemoji);
 </script>
