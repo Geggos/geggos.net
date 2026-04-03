@@ -61,7 +61,10 @@ main {
 
 .content {
     padding: 0;
+    width: 100%;
     max-width: 1200px;
+    min-width: 0;
+    box-sizing: border-box;
     align-self: center;
     padding-bottom: 3em;
 }

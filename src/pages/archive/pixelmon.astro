@@ -1,0 +1,149 @@
+---
+import Main from "../../layouts/Main.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+import ImageGrid from "../../components/ImageGrid.astro";
+import ImageCollage from "../../components/ImageCollage.astro";
+
+// 2025 Images
+import img_2025_bag from "../../assets/artwork/cobblemon/2025/images/bag.png";
+import img_2025_banner_1 from "../../assets/artwork/cobblemon/2025/images/banner_1.png";
+import img_2025_cobble_icon from "../../assets/artwork/cobblemon/2025/images/cobble_icon.png";
+import img_2025_marlo from "../../assets/artwork/cobblemon/2025/images/marlo postcard.png";
+import img_2025_news from "../../assets/artwork/cobblemon/2025/images/news.png";
+import img_2025_rsw572 from "../../assets/artwork/cobblemon/2025/images/rsw572cgtrue.png";
+import img_2025_rsw740 from "../../assets/artwork/cobblemon/2025/images/rsw740cgtrue.png";
+import img_2024_results from "../../assets/artwork/cobblemon/2024/images/Results Poster.png";
+import img_2024_icon from "../../assets/artwork/cobblemon/2024/images/pixelmon icon 2024.png";
+import img_2024_poster from "../../assets/artwork/cobblemon/2024/images/poster_2.png";
+
+import ss_1 from "../../assets/artwork/cobblemon/screenshots/cobblemon1.png";
+import ss_2 from "../../assets/artwork/cobblemon/screenshots/cobblemon2.png";
+import ss_3 from "../../assets/artwork/cobblemon/screenshots/cobblemon3.png";
+import ss_4 from "../../assets/artwork/cobblemon/screenshots/cobblemon4.png";
+import ss_5 from "../../assets/artwork/cobblemon/screenshots/cobblemon5.png";
+import ss_6 from "../../assets/artwork/cobblemon/screenshots/cobblemon6.png";
+import ss_7 from "../../assets/artwork/cobblemon/screenshots/cobblemon7.png";
+import ss_8 from "../../assets/artwork/cobblemon/screenshots/cobblemon8.png";
+import ss_9 from "../../assets/artwork/cobblemon/screenshots/cobblemon9.png";
+import ss_10 from "../../assets/artwork/cobblemon/screenshots/cobblemon10.png";
+
+// 2025 Icons
+import icon_2025_mason from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_MASON.png";
+import icon_2025_charlie from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_charlie.png";
+import icon_2025_chef from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_chef.png";
+import icon_2025_eli from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_eli.png";
+import icon_2025_geggos from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_geggos.png";
+import icon_2025_kiri from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_kiri.png";
+import icon_2025_lehgo from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_lehgo.png";
+import icon_2025_nasa from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_nasa.png";
+import icon_2025_pink from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_pink.png";
+import icon_2025_plasma from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_plasma.png";
+import icon_2025_pobiii from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_pobiii.png";
+import icon_2025_rhi from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_rhi.png";
+import icon_2025_skully from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_skully.png";
+import icon_2025_sync from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_sync.png";
+import icon_2025_tori from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_tori.png";
+import icon_2025_yehn from "../../assets/artwork/cobblemon/2025/icons/cobblemon_icon_yehn.png";
+
+// 2024 Icons
+import icon_2024_eli from "../../assets/artwork/cobblemon/2024/icons/Challanger Eli.png";
+import icon_2024_skully from "../../assets/artwork/cobblemon/2024/icons/Challanger Skully.png";
+import icon_2024_lehgoify from "../../assets/artwork/cobblemon/2024/icons/Cosplay Lehgoify.png";
+import icon_2024_chef from "../../assets/artwork/cobblemon/2024/icons/Easel Chef.png";
+import icon_2024_kiri from "../../assets/artwork/cobblemon/2024/icons/Easel Kiri.png";
+import icon_2024_mason from "../../assets/artwork/cobblemon/2024/icons/Flameseeker Mason.png";
+import icon_2024_plasma from "../../assets/artwork/cobblemon/2024/icons/Frostseeker Plasma.png";
+import icon_2024_charlie from "../../assets/artwork/cobblemon/2024/icons/LOVENOTE Charlie.png";
+import icon_2024_pink from "../../assets/artwork/cobblemon/2024/icons/LOVENOTE Pink.png";
+import icon_2024_geggos from "../../assets/artwork/cobblemon/2024/icons/Trainer Geggos.png";
+import icon_2024_nasa from "../../assets/artwork/cobblemon/2024/icons/Trainer Nasa.png";
+
+const artworkGrid = [
+    { src: img_2025_bag, alt: "" },
+    { src: img_2025_banner_1, alt: "" },
+    { src: img_2025_cobble_icon, alt: "" },
+    { src: img_2025_marlo, alt: "" },
+    { src: img_2025_news, alt: "" },
+    { src: img_2025_rsw572, alt: "" },
+    { src: img_2025_rsw740, alt: "" },
+    { src: img_2024_results, alt: "" },
+    { src: img_2024_icon, alt: "" },
+    { src: img_2024_poster, alt: "" },
+];
+
+const screenshots = [
+    { src: ss_1, alt: "" },
+    { src: ss_2, alt: "" },
+    { src: ss_3, alt: "" },
+    { src: ss_4, alt: "" },
+    { src: ss_5, alt: "" },
+    { src: ss_6, alt: "" },
+    { src: ss_7, alt: "" },
+    { src: ss_8, alt: "" },
+    { src: ss_9, alt: "" },
+    { src: ss_10, alt: "" },
+];
+
+const icons2025 = [
+    { src: icon_2025_mason, alt: "" },
+    { src: icon_2025_charlie, alt: "" },
+    { src: icon_2025_chef, alt: "" },
+    { src: icon_2025_eli, alt: "" },
+    { src: icon_2025_geggos, alt: "" },
+    { src: icon_2025_kiri, alt: "" },
+    { src: icon_2025_lehgo, alt: "" },
+    { src: icon_2025_nasa, alt: "" },
+    { src: icon_2025_pink, alt: "" },
+    { src: icon_2025_plasma, alt: "" },
+    { src: icon_2025_pobiii, alt: "" },
+    { src: icon_2025_rhi, alt: "" },
+    { src: icon_2025_skully, alt: "" },
+    { src: icon_2025_sync, alt: "" },
+    { src: icon_2025_tori, alt: "" },
+    { src: icon_2025_yehn, alt: "" },
+];
+
+const icons2024 = [
+    { src: icon_2024_eli, alt: "" },
+    { src: icon_2024_skully, alt: "" },
+    { src: icon_2024_lehgoify, alt: "" },
+    { src: icon_2024_chef, alt: "" },
+    { src: icon_2024_kiri, alt: "" },
+    { src: icon_2024_mason, alt: "" },
+    { src: icon_2024_plasma, alt: "" },
+    { src: icon_2024_charlie, alt: "" },
+    { src: icon_2024_pink, alt: "" },
+    { src: icon_2024_geggos, alt: "" },
+    { src: icon_2024_nasa, alt: "" },
+];
+---
+
+<Main>
+    <div class="my-8 text-center flex flex-col gap-4">
+        <a href="/archive" class="fancy text-lg self-center">← Back</a>
+        <h1>Pixelmon / Cobblemon</h1>
+        <hr>
+
+        <section class="mt-4 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">Banners, Posters and More!</h2>
+            <section class="self-center">
+                <ImageCollage images={artworkGrid} columnCount={3} gap="1rem" outline={false} maxImageWidth={250} />
+            </section>
+        </section>
+
+        <section class="mt-6 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">Screenshots</h2>
+            <ImageCarousel images={screenshots} />
+        </section>
+
+        <section class="mt-6 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">2025 Icons</h2>
+            <ImageGrid images={icons2025} aspectRatio="1 / 1" maxImageHeight="250" maxImageWidth="250" outline={false} />
+        </section>
+
+        <section class="mt-6 flex flex-col gap-2">
+            <h2 class="font-cute text-2xl accent-secondary font-semibold">2024 Icons</h2>
+            <ImageGrid images={icons2024} aspectRatio="1 / 1" maxImageHeight="250" maxImageWidth="250" outline={false} />
+        </section>
+    </div>
+</Main>

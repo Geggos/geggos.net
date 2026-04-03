@@ -1,0 +1,178 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import ImageLightbox from "./ImageLightbox.astro";
+
+interface CollageImage {
+    src: ImageMetadata;
+    alt: string;
+    href?: string;
+    classes?: string;
+}
+
+interface Props {
+    images: CollageImage[];
+    linkToSource?: boolean;
+    openInNewTab?: boolean;
+    columnCount?: number;
+    gap?: string | number;
+    outline?: boolean;
+    maxImageWidth?: string | number;
+}
+
+const {
+    images,
+    linkToSource = true,
+    openInNewTab = true,
+    columnCount = 3,
+    gap = "1rem",
+    outline = true,
+    maxImageWidth,
+} = Astro.props;
+
+const normalizeSize = (value: string | number | undefined, fallback: string) => {
+    if (value === undefined || value === null || value === "") return fallback;
+    if (typeof value === "number") return `${value}px`;
+    return /^\d+(\.\d+)?$/.test(value) ? `${value}px` : value;
+};
+
+const normalizeGap = (value: string | number) => {
+    if (typeof value === "number") return `${value}px`;
+    return /^\d+(\.\d+)?$/.test(value) ? `${value}px` : value;
+};
+
+const resolvedGap = normalizeGap(gap);
+const collageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
+
+const extractNumericValue = (str: string): number => {
+    const match = str.match(/[\d.]+/);
+    return match ? parseInt(match[0]) : 0;
+};
+
+let collageMaxWidth = "100%";
+if (maxImageWidth) {
+    const resolvedImageWidth = normalizeSize(maxImageWidth, "100%");
+    const imageWidthNum = typeof resolvedImageWidth === "string" && resolvedImageWidth.endsWith("px") 
+        ? extractNumericValue(resolvedImageWidth) 
+        : 250;
+    const gapNum = extractNumericValue(resolvedGap);
+    const totalGapWidth = (columnCount - 1) * gapNum;
+    collageMaxWidth = `${imageWidthNum * columnCount + totalGapWidth}px`;
+}
+
+const target = openInNewTab ? "_blank" : undefined;
+const rel = openInNewTab ? "noreferrer" : undefined;
+const lightboxId = `collage-lightbox-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="image-collage" style={`--collage-columns: ${columnCount}; --collage-gap: ${resolvedGap}; --collage-outline: ${collageOutline}; --collage-max-width: ${collageMaxWidth};`}>
+    {
+        images.map((image, index) => {
+            const href = image.href || (linkToSource ? image.src.src : undefined);
+
+            if (href) {
+                return (
+                    <a
+                        class="collage-item"
+                        href={href}
+                        target={target}
+                        rel={rel}
+                        data-lightbox-trigger={lightboxId}
+                        data-lightbox-index={index}
+                    >
+                        <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+                    </a>
+                );
+            }
+
+            return (
+                <div
+                    class="collage-item"
+                    data-lightbox-trigger={lightboxId}
+                    data-lightbox-index={index}
+                    style="cursor: pointer;"
+                >
+                    <Image src={image.src} alt={image.alt} loading="lazy" class={`collage-img ${image.classes || ""}`} />
+                </div>
+            );
+        })
+    }
+</div>
+
+<ImageLightbox images={images} lightboxId={lightboxId} />
+
+<style>
+    .image-collage {
+        column-count: var(--collage-columns);
+        column-gap: var(--collage-gap);
+        width: 100%;
+        max-width: var(--collage-max-width);
+    }
+
+    @media (max-width: 768px) {
+        .image-collage {
+            column-count: 1;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1023px) {
+        .image-collage {
+            column-count: 2;
+        }
+    }
+
+    .collage-item {
+        display: block;
+        overflow: hidden;
+        border: var(--collage-outline);
+        margin-bottom: var(--collage-gap);
+        break-inside: avoid;
+        width: 100%;
+    }
+
+    .collage-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    // @ts-nocheck
+    function openFromTrigger(event) {
+        const trigger = event.currentTarget;
+        if (!(trigger instanceof HTMLElement)) return;
+
+        const lightboxId = trigger.dataset.lightboxTrigger;
+        const index = Number(trigger.dataset.lightboxIndex);
+        if (!lightboxId || Number.isNaN(index)) return;
+
+        const openLightbox = window[`openLightbox_${lightboxId}`];
+        if (typeof openLightbox !== "function") return;
+
+        event.preventDefault();
+        openLightbox(index);
+    }
+
+    function setupCollageLightbox(collage) {
+        if (!(collage instanceof HTMLElement)) return;
+
+        const items = collage.querySelectorAll("[data-lightbox-trigger]");
+        items.forEach((item) => {
+            if (!(item instanceof HTMLElement)) return;
+            item.addEventListener("click", openFromTrigger);
+        });
+    }
+
+    const initCollageLightbox = () => {
+        document.querySelectorAll(".image-collage").forEach((collage) => {
+            if (collage.dataset.collageLightboxReady === "true") return;
+            setupCollageLightbox(collage);
+            collage.dataset.collageLightboxReady = "true";
+        });
+    };
+
+    document.addEventListener("DOMContentLoaded", initCollageLightbox);
+    document.addEventListener("astro:after-swap", initCollageLightbox);
+</script>

@@ -7,27 +7,74 @@ import FormattedDate from "./FormattedDate.astro";
 interface Movie {
     entryTitle: string;
     entryUrl: string;
-    publishedAt: string;
     watchedDate?: string;
     isRewatch: boolean;
     filmTitle?: string;
     filmYear?: string;
     memberRating?: string;
-    memberLike?: string;
-    tmdbMovieId?: string;
-    author?: string;
-    descriptionText: string;
     posterUrl?: string;
 }
+
+const getTag = (xml: string, tag: string) =>
+    xml.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`))?.[1]?.trim();
+
+const getFirst = (rss: string) =>
+    rss.match(/<item>([\s\S]*?)<\/item>/)?.[1];
+
+const parseRating = (entryTitle?: string) => {
+    if (!entryTitle) return undefined;
+
+    const starMatch = entryTitle.match(/★+/)?.[0];
+    const fullStars = starMatch ? starMatch.length : 0;
+    const hasHalfStar = entryTitle.includes("½");
+
+    if (fullStars === 0 && !hasHalfStar) return undefined;
+
+    return `${fullStars}${hasHalfStar ? ".5" : ""}`;
+};
+
+const isRewatch = (itemXml: string, entryTitle?: string) => {
+    const rewatchTag = getTag(itemXml, "letterboxd:rewatch");
+    if (rewatchTag) {
+        return /yes|true|rewatch/i.test(rewatchTag);
+    }
+
+    if (!entryTitle) return false;
+
+    return /rewatch|rewatched/i.test(entryTitle);
+};
+
+const getPosterUrl = (itemXml: string) => {
+    const description = getTag(itemXml, "description");
+    if (description) {
+        const imageInDescription = description.match(/<img[^>]+src="([^"]+)"/i)?.[1];
+        if (imageInDescription) return imageInDescription;
+    }
+
+    return getTag(itemXml, "letterboxd:image");
+};
 
 let movie: Movie | null = null;
 
 try {
-    const url = new URL("/api/letterboxd", Astro.url.origin);
-    const res = await fetch(url.toString());
-    const data = await res.json();
-    if (res.ok && data && !data.error) {
-        movie = data;
+    const rss = await fetch("https://letterboxd.com/Geggos/rss/", {
+        cache: "no-store",
+    }).then((r) => r.text());
+
+    const itemXml = getFirst(rss);
+    const entryTitle = itemXml ? getTag(itemXml, "title") : undefined;
+
+    if (itemXml && entryTitle) {
+        movie = {
+            entryTitle,
+            entryUrl: getTag(itemXml, "link") ?? "#",
+            watchedDate: getTag(itemXml, "letterboxd:watchedDate"),
+            isRewatch: isRewatch(itemXml, entryTitle),
+            filmTitle: getTag(itemXml, "letterboxd:filmTitle"),
+            filmYear: getTag(itemXml, "letterboxd:filmYear"),
+            memberRating: parseRating(entryTitle),
+            posterUrl: getPosterUrl(itemXml),
+        };
     }
 } catch (error) {
     console.error("couldnt fetch letterboxd:", error);
@@ -44,7 +91,7 @@ try {
                 {movie.posterUrl && (
                     <img
                         src={movie.posterUrl}
-                        alt={movie.filmTitle || movie.entryTitle}
+                        alt={movie.filmTitle ?? movie.entryTitle}
                         class="movie-icon shadow-md"
                     />
                 )}
@@ -55,14 +102,15 @@ try {
                         class="movie-header flex flex-row gap-2"
                     >
                         <div class="font-semibold accent highlight-link">
-                            {movie.filmTitle} ({movie.filmYear})
+                            {movie.filmTitle ?? movie.entryTitle}
+                            {movie.filmYear ? ` (${movie.filmYear})` : ""}
                         </div>
                     </a>
-                    <div id="movie-watched" class="flex flex-row gap-2">
+                    <div id="movie-watched" class="movie-meta-row gap-y-2">
                         <span class="accent-secondary font-semibold">
                             Date:{" "}
                         </span>
-                        <div class="block text-sm font-semibold">
+                        <div class="movie-meta-item block text-sm font-semibold">
                             <Icon name="fa6-solid:calendar" />
                             {movie.watchedDate ? (
                                 <FormattedDate
@@ -77,7 +125,7 @@ try {
                             )}
                         </div>
                         {movie.isRewatch && (
-                            <div class="block text-sm font-semibold">
+                            <div class="movie-meta-item block text-sm font-semibold">
                                 <Icon name="fa6-solid:rotate-left" />
                                 <span>Rewatch</span>
                             </div>
@@ -109,10 +157,11 @@ try {
         padding: 1em;
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
-        width: fit-content;
-        align-self: center;
+        align-items: center;
+        width: 100%;
         gap: 0.75rem;
+        justify-content: center;
+        flex: 1;
     }
 
     .movie-icon {
@@ -125,12 +174,27 @@ try {
     }
 
     .movie-info {
-        flex: 1;
         min-width: 0;
+    }
+
+    .movie-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        min-width: 0;
+    }
+
+    .movie-meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        white-space: nowrap;
     }
 
     .letterboxd-widget {
         width: 100%;
+        height: 100%;
         user-select: none;
         will-change: transform;
         position: relative;

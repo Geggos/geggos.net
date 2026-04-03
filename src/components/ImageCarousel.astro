@@ -1,0 +1,349 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import ImageLightbox from "./ImageLightbox.astro";
+
+interface CarouselImage {
+    src: ImageMetadata;
+    alt: string;
+    href?: string;
+    classes?: string;
+}
+
+interface Props {
+    images: CarouselImage[];
+    linkToSource?: boolean;
+    openInNewTab?: boolean;
+    aspectRatio?: string;
+}
+
+const {
+    images,
+    linkToSource = true,
+    openInNewTab = true,
+    aspectRatio = "16 / 9",
+} = Astro.props;
+
+const target = openInNewTab ? "_blank" : undefined;
+const rel = openInNewTab ? "noreferrer" : undefined;
+const lightboxId = `carousel-lightbox-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="image-carousel" style={`--image-ratio: ${aspectRatio};`} tabindex="0" aria-label="Image carousel">
+    <div class="carousel-stage" data-carousel-stage>
+        {
+            images.map((image, index) => {
+                const href = image.href || (linkToSource ? image.src.src : undefined);
+                const isActive = index === 0;
+
+                if (href) {
+                    return (
+                        <a
+                            class={`carousel-slide ${isActive ? "is-active" : ""}`}
+                            href={href}
+                            target={target}
+                            rel={rel}
+                            data-carousel-slide
+                            data-slide-index={index}
+                            data-description={image.alt}
+                            data-lightbox-trigger={lightboxId}
+                            data-lightbox-index={index}
+                        >
+                            <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-img ${image.classes || ""}`} />
+                        </a>
+                    );
+                }
+
+                return (
+                    <div class={`carousel-slide ${isActive ? "is-active" : ""}`} data-carousel-slide data-slide-index={index} data-description={image.alt} data-lightbox-trigger={lightboxId} data-lightbox-index={index} style="cursor: pointer;">
+                        <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-img ${image.classes || ""}`} />
+                    </div>
+                );
+            })
+        }
+    </div>
+    <div class="carousel-description" data-carousel-description>
+        {images[0]?.alt && <p>{images[0].alt}</p>}
+    </div>
+    <div class="carousel-previews" data-carousel-previews>
+        {
+            images.map((image, index) => (
+                <button
+                    type="button"
+                    class={`carousel-preview ${index === 0 ? "is-active" : ""}`}
+                    aria-label={`Show image ${index + 1}`}
+                    data-carousel-preview
+                    data-preview-index={index}
+                >
+                    <Image src={image.src} alt={image.alt} loading="lazy" class={`carousel-preview-img ${image.classes || ""}`} />
+                </button>
+            ))
+        }
+    </div>
+</div>
+
+<ImageLightbox images={images} lightboxId={lightboxId} />
+
+<style>
+    .image-carousel {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .carousel-stage {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        height: min(70vh, 820px);
+        box-sizing: border-box;
+    }
+
+    .carousel-slide {
+        display: none;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 4px solid var(--bg-accent-transparent);
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+    }
+
+    .carousel-slide.is-active {
+        display: block;
+    }
+
+    .carousel-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: white;
+    }
+
+    .carousel-previews {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 110px;
+        justify-content: start;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        padding-top: 0.2rem;
+        padding-bottom: 0.25rem;
+        scrollbar-width: thin;
+        scroll-snap-type: x proximity;
+    }
+
+    .carousel-previews.is-compact {
+        justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+        .image-carousel {
+            gap: 0.5rem;
+            width: 100%;
+            margin-inline: auto;
+        }
+
+        .carousel-stage {
+            height: min(46vh, 420px);
+        }
+
+        .carousel-previews {
+            grid-auto-columns: 86px;
+            gap: 0.4rem;
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+        }
+
+        .carousel-preview {
+            border-width: 2px;
+            border-radius: 10px;
+        }
+
+        .carousel-slide {
+            border-width: 3px;
+            border-radius: 12px;
+        }
+
+        .carousel-description p {
+            font-size: 0.88rem;
+            line-height: 1.3;
+        }
+    }
+
+    .carousel-preview {
+        border: 3px solid var(--bg-accent-transparent);
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 0;
+        background: white;
+        cursor: pointer;
+        opacity: 0.65;
+        transition: transform 80ms ease-out, opacity 80ms ease-out, border-color 80ms ease-out;
+        scroll-snap-align: start;
+    }
+
+    .carousel-preview.is-active {
+        opacity: 1;
+        border-color: var(--accent);
+    }
+
+    .carousel-preview-img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+
+    @media (hover: hover) {
+        .carousel-preview:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .carousel-preview:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+    }
+
+    .carousel-description {
+        text-align: center;
+        min-height: 1.5rem;
+    }
+
+    .carousel-description p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: var(--accent-inactive);
+    }
+</style>
+
+<script>
+    // @ts-nocheck
+    function wrapIndex(index, size) {
+        if (size === 0) return 0;
+        if (index < 0) return size - 1;
+        if (index >= size) return 0;
+        return index;
+    }
+
+    function openFromTrigger(event) {
+        const trigger = event.currentTarget;
+        if (!(trigger instanceof HTMLElement)) return;
+
+        const lightboxId = trigger.dataset.lightboxTrigger;
+        const index = Number(trigger.dataset.lightboxIndex);
+        if (!lightboxId || Number.isNaN(index)) return;
+
+        const openLightbox = window[`openLightbox_${lightboxId}`];
+        if (typeof openLightbox !== "function") return;
+
+        event.preventDefault();
+        openLightbox(index);
+    }
+
+    function setupCarousel(carousel) {
+        if (!(carousel instanceof HTMLElement)) return;
+
+        const slides = Array.from(carousel.querySelectorAll("[data-carousel-slide]"));
+        const previews = Array.from(carousel.querySelectorAll("[data-carousel-preview]"));
+        const previewsContainer = carousel.querySelector("[data-carousel-previews]");
+        const descriptionEl = carousel.querySelector("[data-carousel-description]");
+
+        if (slides.length === 0 || previews.length === 0) return;
+
+        let activeIndex = 0;
+
+        function render() {
+            slides.forEach((slide, slideIndex) => {
+                if (!(slide instanceof HTMLElement)) return;
+                slide.classList.toggle("is-active", slideIndex === activeIndex);
+            });
+
+            previews.forEach((preview, previewIndex) => {
+                if (!(preview instanceof HTMLElement)) return;
+                preview.classList.toggle("is-active", previewIndex === activeIndex);
+                if (previewIndex === activeIndex) {
+                    preview.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+                }
+            });
+
+            if (descriptionEl instanceof HTMLElement) {
+                const activeSlide = slides[activeIndex];
+                const description = activeSlide instanceof HTMLElement ? activeSlide.dataset.description || "" : "";
+
+                descriptionEl.textContent = "";
+                if (description) {
+                    const text = document.createElement("p");
+                    text.textContent = description;
+                    descriptionEl.appendChild(text);
+                }
+            }
+        }
+
+        function setActive(index) {
+            activeIndex = wrapIndex(index, slides.length);
+            render();
+        }
+
+        previews.forEach((preview) => {
+            if (!(preview instanceof HTMLElement)) return;
+            preview.addEventListener("click", () => {
+                const index = Number(preview.dataset.previewIndex);
+                if (Number.isNaN(index)) return;
+                setActive(index);
+            });
+        });
+
+        function updatePreviewAlignment() {
+            if (!(previewsContainer instanceof HTMLElement)) return;
+            const fitsInView = previewsContainer.scrollWidth <= previewsContainer.clientWidth + 1;
+            previewsContainer.classList.toggle("is-compact", fitsInView);
+            if (!fitsInView) {
+                previewsContainer.scrollLeft = 0;
+            }
+        }
+
+        slides.forEach((slide) => {
+            if (!(slide instanceof HTMLElement)) return;
+            slide.addEventListener("click", openFromTrigger);
+        });
+
+        carousel.addEventListener("keydown", (event) => {
+            switch (event.key) {
+                case "ArrowRight":
+                    event.preventDefault();
+                    setActive(activeIndex + 1);
+                    break;
+                case "ArrowLeft":
+                    event.preventDefault();
+                    setActive(activeIndex - 1);
+                    break;
+            }
+        });
+
+        updatePreviewAlignment();
+        window.addEventListener("resize", updatePreviewAlignment);
+        setActive(0);
+    }
+
+    const initializeCarousels = () => {
+        document.querySelectorAll(".image-carousel").forEach((carousel) => {
+            if (!(carousel instanceof HTMLElement)) return;
+            if (carousel.dataset.carouselReady === "true") return;
+            setupCarousel(carousel);
+            carousel.dataset.carouselReady = "true";
+        });
+    };
+
+    document.addEventListener("DOMContentLoaded", initializeCarousels);
+    document.addEventListener("astro:after-swap", initializeCarousels);
+</script>

@@ -1,0 +1,122 @@
+---
+import { projects } from "../data/projects";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+
+const latestProject = projects[0];
+---
+
+<div class="projects-widget">
+    <div class="text-xl text-center self-center projects-header fancy">
+        Latest Project
+    </div>
+    {
+        latestProject ? (
+            <div class="project-entry shadow-md">
+                <div class="project-info flex flex-col gap-2 text-left">
+                    <div class="project-title font-semibold accent">
+                        {latestProject.name}
+                    </div>
+                    <div class="flex flex-row gap-2 flex-wrap">
+                        {latestProject.tags.map((tag) => (
+                            <div class="block text-sm font-semibold">
+                                <Icon name={tag.icon || "fa6-solid:tag"} />
+                                {tag.label}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <Image
+                    src={latestProject.image}
+                    alt={latestProject.imageAlt}
+                    class={`project-thumbnail ${latestProject.imageClass || ''}`}
+                />
+            </div>
+        ) : (
+            <div>No projects yet</div>
+        )
+    }
+</div>
+
+<style>
+    .project-entry {
+        border: 4px solid var(--bg-accent-transparent);
+        border-radius: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .project-entry {
+            max-height: 300px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .project-entry {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .project-thumbnail {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        min-height: 0;
+        aspect-ratio: auto;
+        object-fit: cover;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        mask-image: linear-gradient(to bottom, transparent 0%, white 40%);
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            white 40%
+        );
+    }
+
+    @media (min-width: 768px) {
+        .project-thumbnail {
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            mask-image: linear-gradient(to right, transparent 0%, white 40%);
+            -webkit-mask-image: linear-gradient(
+                to right,
+                transparent 0%,
+                white 40%
+            );
+        }
+    }
+
+    .project-info {
+        min-width: 0;
+        padding: 1em;
+        align-self: center;
+    }
+
+    .projects-widget {
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        will-change: transform;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    .projects-header {
+        color: var(--accent);
+    }
+
+    @media (hover: hover) {
+        .projects-header.fancy:hover:not(:active) {
+            transform: rotate(-1deg);
+        }
+    }
+</style>

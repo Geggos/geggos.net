@@ -10,6 +10,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 import cloudflare from "@astrojs/cloudflare";
 
+// this is genuinely evil and i dont know if its the right fix but npx astro dev wouldnt work without this (issue with astro icon)
+const isProduction = !process.env.DEV && process.env.NODE_ENV !== 'development';
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://geggos.net",
@@ -19,7 +22,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  adapter: cloudflare({
-    imageService: { build: 'compile', runtime: 'cloudflare-binding' }
-  }),
+  ...(isProduction ? {
+    adapter: cloudflare({
+      imageService: { build: 'compile', runtime: 'cloudflare-binding' }
+    })
+  } : {}),
 });

@@ -1,12 +1,9 @@
 ---
 import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
-import placeholder from "../assets/blog-placeholder-3.jpg"
-import galleryComics from '../assets/gallery-banners/banner_3.png'
-import galleryMisc from '../assets/gallery-banners/geggobanner.png'
-import galleryChristmas from '../assets/gallery-banners/hohoohohoh.png'
 import GalleryEntry from "../components/GalleryEntry.astro";
 import h_gallery from "../assets/headers/gallery.png"
+import { galleries } from "../data/gallery";
 ---
 
 <Main>
@@ -15,24 +12,15 @@ import h_gallery from "../assets/headers/gallery.png"
         <hr />
         <span class="my-8 font-cute text-xl">Collections of my greatest memories captured through art, screenshots and more!</span>
         <div class="gallery-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 self-center">
-            <GalleryEntry
-                image={galleryComics}
-                label="Comics"
-                alt="Geggos sitting in the grass with a friend on a sunny day"
-                classes="object-right"
-            />
-            <GalleryEntry
-                image={galleryMisc}
-                label="Misc"
-                alt="A banner of Geggos and his friends"
-                classes="object-top"
-            />
-            <GalleryEntry
-                image={galleryChristmas}
-                label="Christmas"
-                alt="Geggos dragging a santa sleigh with two friends in it"
-                classes="object-right"
-            />
+            {galleries.map((gallery) => (
+                <GalleryEntry
+                    image={gallery.image}
+                    label={gallery.label}
+                    alt={gallery.alt}
+                    classes={gallery.classes}
+                    href={gallery.href}
+                />
+            ))}
         </div>
     </div>
 </Main>

@@ -1,0 +1,46 @@
+---
+import Main from "../../layouts/Main.astro";
+import ImageCarousel from "../../components/ImageCarousel.astro";
+import ImageGrid from "../../components/ImageGrid.astro";
+
+import c_bubble from "../../assets/artwork/comics/bubble.png";
+import c_flowergirl from "../../assets/artwork/comics/flowergirl.png";
+import c_milk from "../../assets/artwork/comics/milk.png";
+import c_twelve from "../../assets/artwork/comics/twelve.png";
+import c_work from "../../assets/artwork/comics/work.png";
+
+const comics = [
+    {
+        src: c_flowergirl,
+        alt: '"Flower Girl" by @halfcharr',
+    },
+    {
+        src: c_milk,
+        alt: '"Milk" by @cheffic',
+    },
+    {
+        src: c_twelve,
+        alt: '"Twelve" by @halfcharr',
+    },
+    {
+        src: c_work,
+        alt: '"Hard day" by @halfcharr',
+    },
+    {
+        src: c_bubble,
+        alt: '"Bubbles" by @halfcharr',
+    },
+];
+---
+
+<Main>
+    <div class="my-8 text-center flex flex-col gap-4">
+        <a href="/gallery" class="fancy text-lg self-center">← Back</a>
+        <h1>Comics</h1>
+        <hr>
+
+        <section class="mt-4 flex flex-col gap-2">
+            <ImageCarousel images={comics} aspectRatio="16 / 10" />
+        </section>
+    </div>
+</Main>

@@ -1,9 +1,9 @@
 ---
 import Main from "../layouts/Main.astro";
 import { Image } from "astro:assets";
-import geggobanner from "../assets/geggobanner.png";
-import buh from "../assets/wip.png";
 import h_projects from "../assets/headers/projects.png"
+import ProjectEntry from "../components/ProjectEntry.astro";
+import { projects } from "../data/projects";
 ---
 
 <Main>
@@ -11,13 +11,18 @@ import h_projects from "../assets/headers/projects.png"
         <Image src={h_projects} alt="Projects" class="custom-header" height={250} />
         <hr />
         <span class="my-8 font-cute text-xl">What is Geggos up to?</span>
-        <Image
-            src={buh}
-            width={300}
-            height={300}
-            alt="the buh is working very hard."
-            class="self-center"
-        />
-        <span>buh is still working on this...</span>
+        <div class="flex flex-col gap-2">
+            {projects.map((project) => (
+                <ProjectEntry
+                    name={project.name}
+                    description={project.description}
+                    tags={project.tags}
+                    image={project.image}
+                    imageAlt={project.imageAlt}
+                    imageClass={project.imageClass}
+                    url={project.url}
+                />
+            ))}
+        </div>
     </div>
 </Main>

@@ -1,0 +1,178 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import ImageLightbox from "./ImageLightbox.astro";
+
+interface GridImage {
+    src: ImageMetadata;
+    alt: string;
+    href?: string;
+    classes?: string;
+}
+
+interface Props {
+    images: GridImage[];
+    linkToSource?: boolean;
+    openInNewTab?: boolean;
+    aspectRatio?: string;
+    maxImageWidth?: string | number;
+    maxImageHeight?: string | number;
+    outline?: boolean;
+}
+
+const {
+    images,
+    linkToSource = true,
+    openInNewTab = true,
+    aspectRatio = "1 / 1",
+    maxImageWidth,
+    maxImageHeight,
+    outline = true,
+} = Astro.props;
+
+const normalizeSize = (value: string | number | undefined, fallback: string) => {
+    if (value === undefined || value === null || value === "") return fallback;
+    if (typeof value === "number") return `${value}px`;
+    return /^\d+(\.\d+)?$/.test(value) ? `${value}px` : value;
+};
+
+const resolvedMaxImageWidth = normalizeSize(maxImageWidth, "100%");
+const resolvedMaxImageHeight = normalizeSize(maxImageHeight, "none");
+const imageOutline = outline ? "4px solid var(--bg-accent-transparent)" : "0";
+
+const target = openInNewTab ? "_blank" : undefined;
+const rel = openInNewTab ? "noreferrer" : undefined;
+const lightboxId = `grid-lightbox-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div
+    class="image-grid"
+    style={`--image-ratio: ${aspectRatio}; --image-max-width: ${resolvedMaxImageWidth}; --image-max-height: ${resolvedMaxImageHeight}; --image-outline: ${imageOutline};`}
+>
+    {
+        images.map((image, index) => {
+            const href = image.href || (linkToSource ? image.src.src : undefined);
+
+            if (href) {
+                return (
+                    <a
+                        class="image-grid-item"
+                        href={href}
+                        target={target}
+                        rel={rel}
+                        data-lightbox-trigger={lightboxId}
+                        data-lightbox-index={index}
+                    >
+                        <Image src={image.src} alt={image.alt} loading="lazy" class={`image-grid-img ${image.classes || ""}`} />
+                    </a>
+                );
+            }
+
+            return (
+                <div
+                    class="image-grid-item"
+                    data-lightbox-trigger={lightboxId}
+                    data-lightbox-index={index}
+                    style="cursor: pointer;"
+                >
+                    <Image src={image.src} alt={image.alt} loading="lazy" class={`image-grid-img ${image.classes || ""}`} />
+                </div>
+            );
+        })
+    }
+</div>
+
+<ImageLightbox images={images} lightboxId={lightboxId} />
+
+<style>
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+        .image-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .image-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .image-grid-item {
+            width: min(100%, min(320px, var(--image-max-width)));
+            justify-self: center;
+        }
+    }
+
+    .image-grid-item {
+        display: block;
+        width: min(100%, var(--image-max-width));
+        border-radius: 16px;
+        overflow: hidden;
+        border: var(--image-outline);
+        transition: transform 100ms ease-out;
+        justify-self: center;
+    }
+
+    @media (hover: hover) {
+        .image-grid-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .image-grid-item:active {
+            transform: scale(0.98) translateY(-4px);
+        }
+    }
+
+    .image-grid-img {
+        width: 100%;
+        aspect-ratio: var(--image-ratio);
+        max-height: var(--image-max-height);
+        object-fit: cover;
+    }
+</style>
+
+<script>
+    // @ts-nocheck
+    function openFromTrigger(event) {
+        const trigger = event.currentTarget;
+        if (!(trigger instanceof HTMLElement)) return;
+
+        const lightboxId = trigger.dataset.lightboxTrigger;
+        const index = Number(trigger.dataset.lightboxIndex);
+        if (!lightboxId || Number.isNaN(index)) return;
+
+        const openLightbox = window[`openLightbox_${lightboxId}`];
+        if (typeof openLightbox !== "function") return;
+
+        event.preventDefault();
+        openLightbox(index);
+    }
+
+    function setupGridLightbox(grid) {
+        if (!(grid instanceof HTMLElement)) return;
+
+        const items = grid.querySelectorAll("[data-lightbox-trigger]");
+        items.forEach((item) => {
+            if (!(item instanceof HTMLElement)) return;
+            item.addEventListener("click", openFromTrigger);
+        });
+    }
+
+    const initGridLightbox = () => {
+        document.querySelectorAll(".image-grid").forEach((grid) => {
+            if (grid.dataset.gridLightboxReady === "true") return;
+            setupGridLightbox(grid);
+            grid.dataset.gridLightboxReady = "true";
+        });
+    };
+
+    document.addEventListener("DOMContentLoaded", initGridLightbox);
+    document.addEventListener("astro:after-swap", initGridLightbox);
+</script>
