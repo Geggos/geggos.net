@@ -1,6 +1,6 @@
 media:
-  input: src/assets/blog
-  output: /src/assets/blog
+  input: src/content/images
+  output: /src/content/images
 
 content:
   - name: blog
@@ -36,7 +36,7 @@ content:
         required: false
         options:
           media: default
-          path: src/assets/artwork/blog
+          path: src/content/images
           extensions: [jpg, jpeg, png, webp]
           rename: safe
 

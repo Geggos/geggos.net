@@ -4,7 +4,7 @@ description: this is meant for geggos. if you are not geggos then DO NOT
   ENTER!!! or you will be SHOT. final warning...
 pubDate: 2026-04-03
 updatedDate: 2026-04-03
-heroImage: /src/assets/blog/blog-placeholder-5.jpg
+heroImage: ../images/blog-placeholder-5.jpg
 ---
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
 
@@ -40,7 +40,7 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ### Output
 
-![blog placeholder](/src/assets/blog/blog-placeholder-about.jpg)
+![blog placeholder](../images/blog-placeholder-about.jpg)
 
 ## Blockquotes
 
