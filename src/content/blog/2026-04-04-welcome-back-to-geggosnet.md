@@ -12,7 +12,7 @@ So, here's a little walk through of each section of [Geggos.net](http://Geggos.n
 
 #### Home Page
 
-The Home page of [geggos.net](http://geggos.net) is probably the most different aspect of the website, gone are the six buttons that lead to different pages, now basic information about Geggos is located here. This includes my discord status, current time, the most recent movie I've watched and my latest project/blog post. This way you can see all the important stuff the second you open the website.
+The Home page of [Geggos.net](http://geggos.net) is probably the most different aspect of the website, gone are the six buttons that lead to different pages, now basic information about Geggos is located here. This includes my discord status, current time, the most recent movie I've watched and my latest project/blog post. This way you can see all the important stuff the second you open the website.
 
 #### Blog
 
@@ -41,7 +41,7 @@ The Archives is another new page that will be used when a gallery is outdated, o
 
 ### That's all for now
 
-Currently, that's everything on [Geggos.net](http://Geggos.net) but more will be added in the future, I will try to keep up with writing blog posts probably related to things I am interested in like new movie or game releases. I will also make an effort to rewrite the two older blog posts from the original version of [geggos.net](http://geggos.net) and repost them here shortly. I hope you enjoyed this little post welcoming you back, whether you are my friend, someone I've never met, or a stalker who's in love with me, you are welcome to enjoy [Geggos.net](http://Geggos.net) to your hearts content, because this time, hopefully, it's staying for good!!!
+Currently, that's everything on [Geggos.net](http://Geggos.net) but more will be added in the future, I will try to keep up with writing blog posts probably related to things I am interested in like new movie or game releases. I will also make an effort to rewrite the two older blog posts from the original version of [Geggos.net](http://geggos.net) and repost them here shortly. I hope you enjoyed this little post welcoming you back, whether you are my friend, someone I've never met, or a stalker who's in love with me, you are welcome to enjoy [Geggos.net](http://Geggos.net) to your hearts content, because this time, hopefully, it's staying for good!!!
 
 ### Special Thanks!
 
