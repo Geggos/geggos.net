@@ -189,6 +189,5 @@ const lightboxId = `grid-lightbox-${Math.random().toString(36).substr(2, 9)}`;
         });
     };
 
-    document.addEventListener("DOMContentLoaded", initGridLightbox);
-    document.addEventListener("astro:after-swap", initGridLightbox);
+    document.addEventListener("astro:page-load", initGridLightbox);
 </script>

@@ -90,6 +90,5 @@ const imageRadius = rounded ? "16px" : "0";
         });
     };
 
-    document.addEventListener("DOMContentLoaded", initImageSingleTriggers);
-    document.addEventListener("astro:after-swap", initImageSingleTriggers);
+    document.addEventListener("astro:page-load", initImageSingleTriggers);
 </script>

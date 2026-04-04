@@ -307,6 +307,5 @@ const { images, lightboxId } = Astro.props;
         });
     };
 
-    document.addEventListener("DOMContentLoaded", initLightboxes);
-    document.addEventListener("astro:after-swap", initLightboxes);
+    document.addEventListener("astro:page-load", initLightboxes);
 </script>
