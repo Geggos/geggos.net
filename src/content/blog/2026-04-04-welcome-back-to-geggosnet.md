@@ -1,6 +1,6 @@
 ---
 title: Welcome back to Geggos.net!
-description: "QUICK!! SIT DOWN! YOU MIGHT NOT BE ABLE TO HANDLE THIS BUT...
+description: "QUICK SIT DOWN! YOU MIGHT NOT BE ABLE TO HANDLE THIS BUT...
   GEGGOS.NET IS BACK! "
 pubDate: 2026-03-25
 updatedDate: 2026-03-25
