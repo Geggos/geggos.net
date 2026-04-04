@@ -16,7 +16,7 @@ The Home page of [geggos.net](http://geggos.net) is probably the most different 
 
 #### Blog
 
-The Blog page looks pretty similar, but works a lot smoother this time around! The posts are written with a different system which means I have more freedom with stuff like image placement and more ways to make my text even more fun to read, like making it **BOLD** or using <mark>highlights!!</mark> I can even do a list now, check it out:
+The Blog page looks pretty similar, but works a lot smoother this time around! The posts are written with a different system which means I have more freedom with stuff like image placement and more ways to make my text even more fun to read, like making it **BOLD** or using highlights!! I can even do a list now, check it out:
 
 - See?
 - I'm making a list
@@ -46,4 +46,4 @@ Currently, that's everything on [Geggos.net](http://Geggos.net) but more will be
 ### Special Thanks!
 
 Special thanks to all my friends who patiently waited for this website including:  
-Alex from [buh.moe](http://buh.moe), Artists Halfcharr & Cheffic, My mom Tori, Best friend Jeremy Butterworth, Beautiful Alexa, Uncle Rhi, My good pal Plasma, Zombiebrain8285 aka Mason, that one Spencer guy I just met, and [Geggos.net](http://Geggos.net) superfans POBIII & Link!
+Alex from [buh.moe](http://buh.moe), Artists Halfcharr & Cheffic, My super pretty mom Tori, Best friend Jeremy Butterworth, Beautiful big sister Alexa, Uncle Rhi, My good pal Plasma, Zombiebrain8285 aka Mason, that one Spencer guy I just met, and [Geggos.net](http://Geggos.net) superfans POBIII & Link!
